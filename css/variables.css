@@ -1,0 +1,105 @@
+/**
+ * PurposeMobile Field Tools - CSS Variables
+ * Design tokens for consistent theming and easy maintenance
+ */
+
+:root {
+    /* Primary Colors */
+    --primary: #006699;
+    --primary-dark: #004d73;
+    --primary-light: #4dabf7;
+    
+    /* Secondary Colors */
+    --secondary: #28a745;
+    --secondary-dark: #1e7e34;
+    
+    /* Status Colors */
+    --danger: #dc3545;
+    --danger-dark: #bd2130;
+    --warning: #ffc107;
+    --warning-dark: #d39e00;
+    --info: #17a2b8;
+    --info-dark: #138496;
+    --success: #28a745;
+    --success-dark: #1e7e34;
+    
+    /* Light Theme UI Colors */
+    --bg-body: #f8f9fa;
+    --bg-app: #ffffff;
+    --bg-card: #ffffff;
+    --bg-input: #f8f9fa;
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+    --text-muted: #868e96;
+    --border: #dee2e6;
+    --border-light: #e9ecef;
+    --shadow: 0 2px 12px rgba(0,0,0,0.12);
+    --shadow-light: 0 1px 4px rgba(0,0,0,0.08);
+    
+    /* Tool-Specific Colors */
+    --pipelevelcheck: #e74c3c;
+    --laser: #17a2b8;
+    --regrade: #e67e22;
+    --gradecheck: #28a745;
+    --chainageil: #9b59b6;
+    --generalnotes: #17a2b8;
+    
+    /* Status Badge Colors */
+    --status-high: #e74c3c;
+    --status-low: #3498db;
+    --status-level: #2ecc71;
+    
+    /* Layout Constants */
+    --radius: 12px;
+    --radius-sm: 8px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.15s ease;
+}
+
+/* Dark Theme Override */
+[data-theme="dark"] {
+    /* Primary Colors - Adjusted for dark background */
+    --primary: #4dabf7;
+    --primary-dark: #339af0;
+    --primary-light: #74c0fc;
+    
+    /* Secondary Colors */
+    --secondary: #51cf66;
+    --secondary-dark: #40c057;
+    
+    /* Status Colors - Brighter for visibility */
+    --danger: #ff6b6b;
+    --danger-dark: #fa5252;
+    --warning: #ffd43b;
+    --warning-dark: #fcc419;
+    --info: #3bc9db;
+    --info-dark: #22b8cf;
+    --success: #51cf66;
+    --success-dark: #40c057;
+    
+    /* Dark Theme UI Colors */
+    --bg-body: #121212;
+    --bg-app: #1e1e1e;
+    --bg-card: #2d2d2d;
+    --bg-input: #2d2d2d;
+    --text-primary: #e9ecef;
+    --text-secondary: #adb5bd;
+    --text-muted: #6c757d;
+    --border: #495057;
+    --border-light: #3a3a3a;
+    --shadow: 0 2px 12px rgba(0,0,0,0.4);
+    --shadow-light: 0 1px 4px rgba(0,0,0,0.3);
+    
+    /* Tool-Specific Colors - Dark theme variants */
+    --pipelevelcheck: #ff6b6b;
+    --laser: #3bc9db;
+    --regrade: #ff922b;
+    --gradecheck: #51cf66;
+    --chainageil: #bb86fc;
+    --generalnotes: #3bc9db;
+    
+    /* Status Badge Colors */
+    --status-high: #ff6b6b;
+    --status-low: #74c0fc;
+    --status-level: #51cf66;
+}
