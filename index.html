@@ -714,16 +714,34 @@
             alert('Please enter project name and stage');
             return;
         }
+        
+        // Check if appState exists
+        if (!window.appState) {
+            alert('App is still loading, please try again in a moment');
+            return;
+        }
+        
         try {
-            await db.collection('reports').add({
+            // Create a clean copy of appState without undefined values
+            const reportData = {
                 userId: auth.currentUser.uid,
-                projectName,
-                stage,
-                timestamp: new Date(),
-                data: window.appState
-            });
+                userEmail: auth.currentUser.email,
+                projectName: projectName,
+                stage: stage,
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+                pipeLevelCheck: window.appState.pipeLevelCheck || { readings: [], readingCounter: 0 },
+                laser: window.appState.laser || { readings: [], readingCounter: 0 },
+                regrade: window.appState.regrade || { readings: [], readingCounter: 0 },
+                gradeCheck: window.appState.gradeCheck || { readings: [], readingCounter: 0 },
+                chainageIL: window.appState.chainageIL || { readings: [], readingCounter: 0 },
+                generalNotes: window.appState.generalNotes || { notes: [], noteCounter: 0 }
+            };
+            
+            await db.collection('reports').add(reportData);
             alert('Report saved successfully!');
         } catch (error) {
+            console.error('Save error:', error);
             alert('Save failed: ' + error.message);
         }
     };
