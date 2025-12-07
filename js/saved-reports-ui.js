@@ -42,6 +42,11 @@ export function initSavedReports() {
 export async function refreshSavedReports() {
     const container = document.getElementById('savedReportsContainer');
     
+    if (!container) {
+        console.error('Saved reports container not found');
+        return;
+    }
+    
     // Show loading state
     container.innerHTML = `
         <div class="empty-state">
@@ -50,30 +55,13 @@ export async function refreshSavedReports() {
         </div>
     `;
     
-    // Wait a bit for Firebase to initialize if needed
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
     try {
         // Load reports from Firebase
         allReports = await loadUserReports();
         
-        // If still no reports and got error notification, show login message
-        if (allReports.length === 0) {
-            // Check if it's because not logged in
-            const checkInterval = setInterval(async () => {
-                const reports = await loadUserReports();
-                if (reports.length > 0 || reports !== null) {
-                    clearInterval(checkInterval);
-                    allReports = reports;
-                    renderReportsList();
-                }
-            }, 1000);
-            
-            // Stop checking after 5 seconds
-            setTimeout(() => clearInterval(checkInterval), 5000);
-        }
+        console.log('Loaded reports:', allReports.length);
         
-        // Apply current filters
+        // Apply current filters and render
         renderReportsList();
         
     } catch (error) {

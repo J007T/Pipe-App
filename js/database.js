@@ -68,15 +68,19 @@ export async function saveReport(appState, projectName, stage) {
  * Load all reports for current user
  */
 export async function loadUserReports() {
+  console.log('🔍 loadUserReports called');
+  
   const user = getCurrentUser();
+  console.log('Current user:', user ? user.email : 'Not logged in');
   
   if (!user) {
     // Don't show notification - let UI handle it
-    console.log('No user logged in for reports');
+    console.log('⚠️ No user logged in for reports');
     return [];
   }
   
   try {
+    console.log('📡 Fetching reports from Firestore...');
     const snapshot = await db.collection('reports')
       .where('userId', '==', user.uid)
       .orderBy('updatedAt', 'desc')
@@ -93,8 +97,9 @@ export async function loadUserReports() {
     console.log(`✅ Loaded ${reports.length} reports`);
     return reports;
   } catch (error) {
-    console.error('Error loading reports:', error);
-    showNotification('Failed to load reports', 'error');
+    console.error('❌ Error loading reports:', error);
+    console.error('Error details:', error.code, error.message);
+    showNotification('Failed to load reports: ' + error.message, 'error');
     return [];
   }
 }
