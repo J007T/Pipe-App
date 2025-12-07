@@ -14,14 +14,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Application CSS -->
-    <link rel="stylesheet" href="variables.css">
-    <link rel="stylesheet" href="base.css">
-    <link rel="stylesheet" href="components.css">
-    
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
 </head>
 <body>
     <div class="app">
@@ -78,11 +73,16 @@
                 <i class="fas fa-sticky-note"></i>
                 <span>Notes</span>
             </button>
+            <button class="tab-btn hidden" data-tab="savedreports" id="savedReportsTab">
+                <i class="fas fa-folder-open"></i>
+                <span>Saved</span>
+            </button>
         </nav>
 
         <!-- Pipe Level Check Tab -->
-        <div id="pipelevelcheck-tab" class="tab-content active">
+        <div id="pipelevelcheck-tab" class="tab-content active pipelevelcheck-tool">
             <div class="main-content">
+                <!-- Pipe Level Check Calculations Section - Collapsed by Default -->
                 <div class="section-header collapsed" onclick="toggleSection('pipeLevelCheckSection', event)">
                     <i class="fas fa-ruler-combined"></i>
                     <span>Pipe Level Check Calculations</span>
@@ -166,14 +166,16 @@
                             <div class="formula-step">• Result: HIGH +0.202m (pipe is 202mm too high)</div>
                         </div>
                     </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Laser Converter Tab -->
-        <div id="laser-tab" class="tab-content">
+        <div id="laser-tab" class="tab-content laser-tool">
             <div class="main-content">
-                <!-- Laser Conversions Section -->
+                <!-- Laser Conversions Section - Collapsed by Default -->
                 <div class="section-header collapsed" onclick="toggleSection('laserConversionsSection', event)">
                     <i class="fas fa-exchange-alt"></i>
                     <span>Laser Grade Conversions</span>
@@ -195,7 +197,7 @@
                     </div>
                 </div>
 
-                <!-- Reference Table -->
+                <!-- Reference Table - Collapsed by Default -->
                 <div class="reference-section">
                     <div class="reference-header collapsed" onclick="toggleReferenceTable('laserReference', event)">
                         <i class="fas fa-table"></i>
@@ -255,14 +257,16 @@
                             <div class="formula-step">• Ratio = 100 ÷ 1.1111 = 90 (1 in 90)</div>
                         </div>
                     </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Regrade Tool Tab -->
-        <div id="regrade-tab" class="tab-content">
+        <div id="regrade-tab" class="tab-content regrade-tool">
             <div class="main-content">
-                <!-- Regrade Calculations Section -->
+                <!-- Regrade Calculations Section - Collapsed by Default -->
                 <div class="section-header collapsed" onclick="toggleSection('regradeCalculationsSection', event)">
                     <i class="fas fa-calculator"></i>
                     <span>Regrade Calculations</span>
@@ -346,14 +350,16 @@
                             <div class="formula-step">• Result: Change from 1.111% to 1.333% (1 in 90 to 1 in 75)</div>
                         </div>
                     </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Grade Check Tab -->
-        <div id="gradecheck-tab" class="tab-content">
+        <div id="gradecheck-tab" class="tab-content gradecheck-tool">
             <div class="main-content">
-                <!-- Grade Verifications Section -->
+                <!-- Grade Verifications Section - Collapsed by Default -->
                 <div class="section-header collapsed" onclick="toggleSection('gradeCheckVerifications', event)">
                     <i class="fas fa-check-double"></i>
                     <span>Grade Verifications</span>
@@ -439,14 +445,16 @@
                             <div class="formula-step">• Result: MATCH - Design and as-constructed are identical</div>
                         </div>
                     </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Chainage IL Tab -->
-        <div id="chainageil-tab" class="tab-content">
+        <div id="chainageil-tab" class="tab-content chainageil-tool">
             <div class="main-content">
-                <!-- Chainage IL Calculations Section -->
+                <!-- Chainage IL Calculations Section - Collapsed by Default -->
                 <div class="section-header collapsed" onclick="toggleSection('chainageILSection', event)">
                     <i class="fas fa-map-marker-alt"></i>
                     <span>Chainage IL Calculations</span>
@@ -468,7 +476,7 @@
                     </div>
                 </div>
 
-                <!-- Reference Table -->
+                <!-- Reference Table - Collapsed by Default -->
                 <div class="reference-section">
                     <div class="reference-header collapsed" onclick="toggleReferenceTable('chainageILReference', event)">
                         <i class="fas fa-table"></i>
@@ -541,14 +549,16 @@
                             <div class="formula-step">• Result: IL at CH 20.00 = 179.472m</div>
                         </div>
                     </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- General Notes Tab -->
-        <div id="generalnotes-tab" class="tab-content">
+        <div id="generalnotes-tab" class="tab-content generalnotes-tool">
             <div class="main-content">
-                <!-- General Notes Section -->
+                <!-- General Notes Section - Collapsed by Default -->
                 <div class="section-header collapsed" onclick="toggleSection('generalNotesSection', event)">
                     <i class="fas fa-sticky-note"></i>
                     <span>General Notes</span>
@@ -594,7 +604,7 @@
             </div>
         </div>
 
-        <!-- Unified Message Preview Section -->
+        <!-- Unified Message Preview Section (Always Visible) -->
         <div class="main-content">
             <div class="section-header" onclick="toggleSection('unifiedPreviewSection', event)">
                 <i class="fas fa-file-alt"></i>
@@ -644,9 +654,17 @@
         <i class="fas fa-check-circle" id="notificationIcon"></i>
         <span id="notificationText">Operation completed</span>
     </div>
+
     
     <!-- Application JavaScript (ES6 Modules) -->
-    <script type="module" src="app.js"></script>
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     
     <!-- Firebase Integration Script -->
     <script>
@@ -790,5 +808,3 @@
         }
     });
     </script>
-</body>
-</html>
