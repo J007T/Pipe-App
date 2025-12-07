@@ -112,29 +112,43 @@
 
 .tab-nav {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(6, 1fr);
     background: var(--bg-card);
     border-bottom: 2px solid var(--border);
     position: sticky;
     top: 0;
     z-index: 100;
     box-shadow: var(--shadow-light);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .tab-btn {
-    padding: 16px 12px;
+    padding: 14px 10px;
     border: none;
     background: transparent;
     color: var(--text-secondary);
     font-weight: 600;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     cursor: pointer;
     transition: var(--transition-fast);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 4px;
     border-bottom: 3px solid transparent;
+    min-width: 60px;
+    white-space: nowrap;
+}
+
+.tab-btn i {
+    font-size: 1.1rem;
+}
+
+.tab-btn span {
+    font-size: 0.7rem;
+    line-height: 1;
 }
 
 .tab-btn.active {
@@ -847,12 +861,17 @@
     }
 
     .tab-btn {
-        font-size: 0.8rem;
-        padding: 14px 8px;
+        font-size: 0.7rem;
+        padding: 12px 8px;
+        min-width: 55px;
     }
 
     .tab-btn i {
-        display: none;
+        font-size: 1rem;
+    }
+    
+    .tab-btn span {
+        font-size: 0.65rem;
     }
 
     .reading-controls {
