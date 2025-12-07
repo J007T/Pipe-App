@@ -75,10 +75,19 @@ function generatePipeLevelCheckSection() {
         const difference = parseFloat(reading.results.difference);
         const status = reading.results.status.split(' ')[0].toUpperCase();
         
-        section += `CH - ${distance.toFixed(2)}\n`;
-        section += `DES - ${designHeight.toFixed(3)}\n`;
-        section += `AS CON - ${measuredHeight.toFixed(3)}\n`;
-        section += `${status} - ${Math.abs(difference).toFixed(3)}\n\n`;
+        // Format with colons and signed numbers
+        section += `CH: ${distance.toFixed(2)}\n`;
+        section += `DES: ${designHeight.toFixed(3)}\n`;
+        section += `AS CON: ${measuredHeight.toFixed(3)}\n`;
+        
+        // HIGH is positive, LOW is negative
+        if (status === 'HIGH') {
+            section += `${status}: +${Math.abs(difference).toFixed(3)}\n\n`;
+        } else if (status === 'LOW') {
+            section += `${status}: -${Math.abs(difference).toFixed(3)}\n\n`;
+        } else {
+            section += `${status}: ${difference.toFixed(3)}\n\n`;
+        }
         
         if (reading.notes) {
             section += `- ${reading.notes}\n\n`;
@@ -111,8 +120,8 @@ function generateLaserSection() {
         const percent = reading.laserPercent || (100 / reading.gradeRatio);
         const ratioDisplay = formatRatio(ratio);
         
-        section += `GRADE - 1 in ${ratioDisplay}\n`;
-        section += `LASER - ${percent.toFixed(4)}%\n`;
+        section += `GRADE: 1 in ${ratioDisplay}\n`;
+        section += `LASER: ${percent.toFixed(4)}%\n`;
         
         if (reading.notes) {
             section += `\n- ${reading.notes}\n`;
@@ -155,21 +164,21 @@ function generateRegradeSection() {
         const newGradeRatio = parseFloat(reading.results.newGradeRatio);
         
         section += `REGRADE\n\n`;
-        section += `FROM - ${currentGradePercent.toFixed(3)}% (1 in ${formatRatio(currentGradeRatio)})\n`;
-        section += `TO - ${newGradePercent.toFixed(3)}% (1 in ${formatRatio(newGradeRatio)})\n\n`;
+        section += `FROM: ${currentGradePercent.toFixed(3)}% (1 in ${formatRatio(currentGradeRatio)})\n`;
+        section += `TO: ${newGradePercent.toFixed(3)}% (1 in ${formatRatio(newGradeRatio)})\n\n`;
         
         const currentHeight = parseFloat(reading.currentHeight);
         const targetHeight = parseFloat(reading.targetHeight);
         const distance = parseFloat(reading.distance);
         
-        section += `AS CON IL - ${currentHeight.toFixed(3)}\n`;
-        section += `TARGET IL - ${targetHeight.toFixed(3)}\n`;
-        section += `DISTANCE - ${distance.toFixed(3)}\n\n`;
+        section += `AS CON IL: ${currentHeight.toFixed(3)}\n`;
+        section += `TARGET IL: ${targetHeight.toFixed(3)}\n`;
+        section += `DISTANCE: ${distance.toFixed(3)}\n\n`;
         
         if (reading.chainage) {
             const chainage = parseFloat(reading.chainage);
             if (!isNaN(chainage)) {
-                section += `CHAINAGE - ${chainage.toFixed(2)}\n\n`;
+                section += `CHAINAGE: ${chainage.toFixed(2)}\n\n`;
             }
         }
         
@@ -207,18 +216,18 @@ function generateGradeCheckSection() {
             reading.designGrade : 
             100 / reading.designGrade;
         
-        section += `DISTANCE - ${reading.length.toFixed(2)}\n\n`;
+        section += `DISTANCE: ${reading.length.toFixed(2)}\n\n`;
         
-        section += `DES GRADE - ${designGradePercent.toFixed(3)}%\n`;
-        section += `DES RISE/FALL - ${reading.designRise.toFixed(3)}\n`;
-        section += `DES RISE/FALL PER METER - ${reading.designRisePerMeter.toFixed(3)}mm\n\n`;
+        section += `DES GRADE: ${designGradePercent.toFixed(3)}%\n`;
+        section += `DES RISE/FALL: ${reading.designRise.toFixed(3)}\n`;
+        section += `DES RISE/FALL PER METER: ${reading.designRisePerMeter.toFixed(3)}mm\n\n`;
         
-        section += `AS CON GRADE - ${reading.actualGrade.toFixed(3)}%\n`;
-        section += `AS CON RISE/FALL - ${reading.actualRise.toFixed(3)}\n`;
-        section += `AS CON RISE/FALL PER METER - ${reading.actualRisePerMeter.toFixed(3)}mm\n\n`;
+        section += `AS CON GRADE: ${reading.actualGrade.toFixed(3)}%\n`;
+        section += `AS CON RISE/FALL: ${reading.actualRise.toFixed(3)}\n`;
+        section += `AS CON RISE/FALL PER METER: ${reading.actualRisePerMeter.toFixed(3)}mm\n\n`;
         
-        section += `PERCENTAGE DIFFERENCE - ${reading.percentageDifference.toFixed(3)}%\n`;
-        section += `RISE/FALL DIFFERENCE - ${reading.riseFallDifference.toFixed(3)}\n\n`;
+        section += `PERCENTAGE DIFFERENCE: ${reading.percentageDifference.toFixed(3)}%\n`;
+        section += `RISE/FALL DIFFERENCE: ${reading.riseFallDifference.toFixed(3)}\n\n`;
         
         if (reading.notes) {
             const noteLines = reading.notes.split('\n').filter(line => line.trim());
@@ -258,10 +267,10 @@ function generateChainageILSection() {
             100 / gradeValue;
         const ilAtChainage = parseFloat(reading.results.ilAtChainage);
         
-        section += `START IL - ${startIL.toFixed(3)}\n`;
-        section += `CHAINAGE - ${chainage.toFixed(2)}\n`;
-        section += `GRADE - ${gradePercent.toFixed(3)}%\n`;
-        section += `IL AT CHAINAGE - ${ilAtChainage.toFixed(3)}\n\n`;
+        section += `START IL: ${startIL.toFixed(3)}\n`;
+        section += `CHAINAGE: ${chainage.toFixed(2)}\n`;
+        section += `GRADE: ${gradePercent.toFixed(3)}%\n`;
+        section += `IL AT CHAINAGE: ${ilAtChainage.toFixed(3)}\n\n`;
         
         if (reading.notes) {
             section += `- ${reading.notes}\n\n`;

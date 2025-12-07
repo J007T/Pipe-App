@@ -149,15 +149,23 @@
                     </div>
                     <div class="reference-content collapsed" id="pipeLevelValuations">
                         <div class="formula-display">
-                            <div class="formula-title">Pipe Level Check Purpose:</div>
-                            <div class="formula-step">• Verify pipe installation against design levels</div>
-                            <div class="formula-step">• Calculate HIGH/LOW deviations from design</div>
-                            <div class="formula-step">• Essential for quality control and compliance</div>
+                            <div class="formula-title">1. PIPE LEVEL CHECK</div>
+                            <div class="formula-step"><strong>Purpose:</strong> Verify installed pipe levels match design specifications.</div>
+                            <div class="formula-step"><strong>When to Use:</strong> After laying each pipe section to confirm it meets design grade.</div>
                             <br>
-                            <div class="formula-title">Field Applications:</div>
-                            <div class="formula-step">• Daily pipe installation checks</div>
-                            <div class="formula-step">• Progress verification against design</div>
-                            <div class="formula-step">• Construction quality documentation</div>
+                            <div class="formula-step"><strong>Steps:</strong></div>
+                            <div class="formula-step">1. Enter the design slope (e.g., 1.111% or 1 in 90)</div>
+                            <div class="formula-step">2. Enter horizontal distance from start point (e.g., 25.00m)</div>
+                            <div class="formula-step">3. Enter the start height/IL (e.g., 179.250m)</div>
+                            <div class="formula-step">4. Enter the measured height at end point (e.g., 179.730m)</div>
+                            <br>
+                            <div class="formula-step"><strong>Math:</strong></div>
+                            <div class="formula-step">• Rise per meter = 1.111% ÷ 100 = 0.01111 m/m</div>
+                            <div class="formula-step">• Design height = 179.250 + (25.00 × 0.01111) = 179.528m</div>
+                            <div class="formula-step">• Difference = 179.730 - 179.528 = 0.202m</div>
+                            <div class="formula-step">• Result: HIGH +0.202m (pipe is 202mm too high)</div>
+                        </div>
+                    </div>
                         </div>
                     </div>
                 </div>
@@ -233,15 +241,22 @@
                     </div>
                     <div class="reference-content collapsed" id="laserValuations">
                         <div class="formula-display">
-                            <div class="formula-title">Laser Converter Purpose:</div>
-                            <div class="formula-step">• Convert between grade ratios and laser percentages</div>
-                            <div class="formula-step">• Essential for laser level setup and verification</div>
-                            <div class="formula-step">• Maintain accuracy in grade establishment</div>
+                            <div class="formula-title">2. LASER CONVERTER</div>
+                            <div class="formula-step"><strong>Purpose:</strong> Convert between grade ratios and laser level percentages for equipment setup.</div>
+                            <div class="formula-step"><strong>When to Use:</strong> Setting up rotating laser levels that require percentage input instead of ratio.</div>
                             <br>
-                            <div class="formula-title">Field Applications:</div>
-                            <div class="formula-step">• Laser level setup and calibration</div>
-                            <div class="formula-step">• Grade verification during construction</div>
-                            <div class="formula-step">• Design to field implementation conversion</div>
+                            <div class="formula-step"><strong>Steps:</strong></div>
+                            <div class="formula-step">1. Enter either the grade ratio (e.g., 90) OR the laser percentage (e.g., 1.1111%)</div>
+                            <div class="formula-step">2. Tool automatically calculates the other value</div>
+                            <br>
+                            <div class="formula-step"><strong>Math:</strong></div>
+                            <div class="formula-step">• Given ratio: 1 in 90</div>
+                            <div class="formula-step">• Laser % = 100 ÷ 90 = 1.1111%</div>
+                            <div class="formula-step">OR</div>
+                            <div class="formula-step">• Given laser: 1.1111%</div>
+                            <div class="formula-step">• Ratio = 100 ÷ 1.1111 = 90 (1 in 90)</div>
+                        </div>
+                    </div>
                         </div>
                     </div>
                 </div>
@@ -318,15 +333,23 @@
                     </div>
                     <div class="reference-content collapsed" id="regradeValuations">
                         <div class="formula-display">
-                            <div class="formula-title">Regrade Tool Purpose:</div>
-                            <div class="formula-step">• Calculate required grade changes between points</div>
-                            <div class="formula-step">• Determine new grades to achieve target levels</div>
-                            <div class="formula-step">• Essential for construction adjustments and corrections</div>
+                            <div class="formula-title">3. REGRADE TOOL</div>
+                            <div class="formula-step"><strong>Purpose:</strong> Calculate what new grade is needed to reach a target level from current position.</div>
+                            <div class="formula-step"><strong>When to Use:</strong> When installed pipe is off-level and you need to determine the corrected grade to get back on track.</div>
                             <br>
-                            <div class="formula-title">Field Applications:</div>
-                            <div class="formula-step">• Construction grade adjustments</div>
-                            <div class="formula-step">• Problem-solving level discrepancies</div>
-                            <div class="formula-step">• Design modification calculations</div>
+                            <div class="formula-step"><strong>Steps:</strong></div>
+                            <div class="formula-step">1. Enter current grade (e.g., 1.111% or 1 in 90)</div>
+                            <div class="formula-step">2. Enter horizontal distance to target (e.g., 30.00m)</div>
+                            <div class="formula-step">3. Enter current pipe IL (e.g., 179.250m)</div>
+                            <div class="formula-step">4. Enter target IL you need to reach (e.g., 179.650m)</div>
+                            <br>
+                            <div class="formula-step"><strong>Math:</strong></div>
+                            <div class="formula-step">• Height difference = 179.650 - 179.250 = 0.400m</div>
+                            <div class="formula-step">• New grade % = (0.400 ÷ 30.00) × 100 = 1.333%</div>
+                            <div class="formula-step">• New ratio = 100 ÷ 1.333 = 75 (1 in 75)</div>
+                            <div class="formula-step">• Result: Change from 1.111% to 1.333% (1 in 90 to 1 in 75)</div>
+                        </div>
+                    </div>
                         </div>
                     </div>
                 </div>
@@ -403,15 +426,25 @@
                     </div>
                     <div class="reference-content collapsed" id="gradeCheckValuations">
                         <div class="formula-display">
-                            <div class="formula-title">Grade Check Purpose:</div>
-                            <div class="formula-step">• Verify as-constructed grades against design grades</div>
-                            <div class="formula-step">• Calculate percentage and rise/fall differences</div>
-                            <div class="formula-step">• Essential for quality assurance and compliance</div>
+                            <div class="formula-title">4. GRADE CHECK</div>
+                            <div class="formula-step"><strong>Purpose:</strong> Compare as-constructed grade against design grade to verify compliance.</div>
+                            <div class="formula-step"><strong>When to Use:</strong> After completing a pipe section to document actual vs design performance.</div>
                             <br>
-                            <div class="formula-title">Field Applications:</div>
-                            <div class="formula-step">• Construction quality verification</div>
-                            <div class="formula-step">• Compliance documentation</div>
-                            <div class="formula-step">• Progress payment verification</div>
+                            <div class="formula-step"><strong>Steps:</strong></div>
+                            <div class="formula-step">1. Enter downstream IL (e.g., 179.250m)</div>
+                            <div class="formula-step">2. Enter upstream IL (e.g., 179.730m)</div>
+                            <div class="formula-step">3. Enter pipe length (e.g., 43.18m)</div>
+                            <div class="formula-step">4. Enter design grade (e.g., 1.111% or 1 in 90)</div>
+                            <br>
+                            <div class="formula-step"><strong>Math:</strong></div>
+                            <div class="formula-step">• Design rise = 43.18 × (1.111 ÷ 100) = 0.480m</div>
+                            <div class="formula-step">• Design rise/meter = (0.480 ÷ 43.18) × 1000 = 11.11mm/m</div>
+                            <div class="formula-step">• Actual rise = 179.730 - 179.250 = 0.480m</div>
+                            <div class="formula-step">• Actual grade % = (0.480 ÷ 43.18) × 100 = 1.111%</div>
+                            <div class="formula-step">• Actual rise/meter = (0.480 ÷ 43.18) × 1000 = 11.11mm/m</div>
+                            <div class="formula-step">• Result: MATCH - Design and as-constructed are identical</div>
+                        </div>
+                    </div>
                         </div>
                     </div>
                 </div>
@@ -500,15 +533,22 @@
                     </div>
                     <div class="reference-content collapsed" id="chainageValuations">
                         <div class="formula-display">
-                            <div class="formula-title">Chainage IL Purpose:</div>
-                            <div class="formula-step">• Calculate invert levels at any chainage along pipeline</div>
-                            <div class="formula-step">• Essential for setting out and verification</div>
-                            <div class="formula-step">• Maintain design integrity throughout construction</div>
+                            <div class="formula-title">5. CHAINAGE IL (IL AT CHAINAGE)</div>
+                            <div class="formula-step"><strong>Purpose:</strong> Calculate the design invert level at any point along the pipeline.</div>
+                            <div class="formula-step"><strong>When to Use:</strong> When you need to know what the design IL should be at an intermediate chainage for setout or checking.</div>
                             <br>
-                            <div class="formula-title">Field Applications:</div>
-                            <div class="formula-step">• Pipeline set out and establishment</div>
-                            <div class="formula-step">• Construction verification at intermediate points</div>
-                            <div class="formula-step">• Design implementation and checking</div>
+                            <div class="formula-step"><strong>Steps:</strong></div>
+                            <div class="formula-step">1. Enter the start IL (e.g., 179.250m)</div>
+                            <div class="formula-step">2. Enter the chainage/distance from start (e.g., 20.00m)</div>
+                            <div class="formula-step">3. Enter the design grade (e.g., 1.111% or 1 in 90)</div>
+                            <br>
+                            <div class="formula-step"><strong>Math:</strong></div>
+                            <div class="formula-step">• Rise per meter = 1.111 ÷ 100 = 0.01111 m/m</div>
+                            <div class="formula-step">• Total rise = 0.01111 × 20.00 = 0.222m</div>
+                            <div class="formula-step">• IL at chainage = 179.250 + 0.222 = 179.472m</div>
+                            <div class="formula-step">• Result: IL at CH 20.00 = 179.472m</div>
+                        </div>
+                    </div>
                         </div>
                     </div>
                 </div>
