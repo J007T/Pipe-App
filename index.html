@@ -79,6 +79,50 @@
             </button>
         </nav>
 
+        <!-- Unified Report Message - Always Visible Above All Tabs -->
+        <div class="main-content">
+            <div class="section-header" onclick="toggleSection('unifiedPreviewSection', event)">
+                <i class="fas fa-file-alt"></i>
+                <span>Unified Report Message</span>
+                <i class="fas fa-chevron-down chevron"></i>
+            </div>
+            <div class="section-content" id="unifiedPreviewSection">
+                <div class="section-inner">
+                    <div class="preview-container">
+                        <div class="preview-label">
+                            <i class="fas fa-comment-dots"></i>
+                            Combined Field Report
+                        </div>
+                        <textarea 
+                            class="preview-textarea" 
+                            id="unifiedPreviewText" 
+                            placeholder="Enter project information and add calculations to generate report..."
+                            oninput="handleUnifiedPreviewEdit()"
+                        ></textarea>
+                        <div class="format-warning hidden" id="unifiedFormatWarning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Manual edits will be overwritten when calculations change
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="btn btn-success" onclick="copyUnifiedMessage()">
+                            <i class="fas fa-copy"></i>
+                            Copy Report
+                        </button>
+                        <button class="btn btn-primary" onclick="saveCurrentReport()">
+                            <i class="fas fa-save"></i>
+                            Save Report
+                        </button>
+                        <button class="btn btn-danger" onclick="clearAllData()">
+                            <i class="fas fa-trash"></i>
+                            Clear All Data
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Pipe Level Check Tab -->
         <div id="pipelevelcheck-tab" class="tab-content active pipelevelcheck-tool">
             <div class="main-content">
@@ -158,6 +202,12 @@
                             <div class="formula-step">2. Enter horizontal distance from start point (e.g., 25.00m)</div>
                             <div class="formula-step">3. Enter the start height/IL (e.g., 179.250m)</div>
                             <div class="formula-step">4. Enter the measured height at end point (e.g., 179.730m)</div>
+                            <br>
+                            <div class="formula-step"><strong>Example:</strong></div>
+                            <div class="formula-step">Slope: 1.111% (1 in 90)</div>
+                            <div class="formula-step">Distance: 25.00m</div>
+                            <div class="formula-step">Start IL: 179.250m</div>
+                            <div class="formula-step">Measured IL: 179.730m</div>
                             <br>
                             <div class="formula-step"><strong>Math:</strong></div>
                             <div class="formula-step">• Rise per meter = 1.111% ÷ 100 = 0.01111 m/m</div>
@@ -249,12 +299,23 @@
                             <div class="formula-step">1. Enter either the grade ratio (e.g., 90) OR the laser percentage (e.g., 1.1111%)</div>
                             <div class="formula-step">2. Tool automatically calculates the other value</div>
                             <br>
+                            <div class="formula-step"><strong>Example:</strong></div>
+                            <div class="formula-step">Given: 1 in 90 (ratio)</div>
+                            <div class="formula-step">Find: Laser percentage</div>
+                            <br>
                             <div class="formula-step"><strong>Math:</strong></div>
-                            <div class="formula-step">• Given ratio: 1 in 90</div>
                             <div class="formula-step">• Laser % = 100 ÷ 90 = 1.1111%</div>
+                            <div class="formula-step">• Result: Set laser to 1.1111%</div>
+                            <br>
                             <div class="formula-step">OR</div>
-                            <div class="formula-step">• Given laser: 1.1111%</div>
-                            <div class="formula-step">• Ratio = 100 ÷ 1.1111 = 90 (1 in 90)</div>
+                            <br>
+                            <div class="formula-step"><strong>Example:</strong></div>
+                            <div class="formula-step">Given: 1.1111% (laser)</div>
+                            <div class="formula-step">Find: Grade ratio</div>
+                            <br>
+                            <div class="formula-step"><strong>Math:</strong></div>
+                            <div class="formula-step">• Ratio = 100 ÷ 1.1111 = 90</div>
+                            <div class="formula-step">• Result: 1 in 90</div>
                         </div>
                     </div>
                         </div>
@@ -342,6 +403,12 @@
                             <div class="formula-step">2. Enter horizontal distance to target (e.g., 30.00m)</div>
                             <div class="formula-step">3. Enter current pipe IL (e.g., 179.250m)</div>
                             <div class="formula-step">4. Enter target IL you need to reach (e.g., 179.650m)</div>
+                            <br>
+                            <div class="formula-step"><strong>Example:</strong></div>
+                            <div class="formula-step">Current grade: 1.111% (1 in 90)</div>
+                            <div class="formula-step">Distance: 30.00m</div>
+                            <div class="formula-step">Current IL: 179.250m</div>
+                            <div class="formula-step">Target IL: 179.650m</div>
                             <br>
                             <div class="formula-step"><strong>Math:</strong></div>
                             <div class="formula-step">• Height difference = 179.650 - 179.250 = 0.400m</div>
@@ -435,6 +502,12 @@
                             <div class="formula-step">2. Enter upstream IL (e.g., 179.730m)</div>
                             <div class="formula-step">3. Enter pipe length (e.g., 43.18m)</div>
                             <div class="formula-step">4. Enter design grade (e.g., 1.111% or 1 in 90)</div>
+                            <br>
+                            <div class="formula-step"><strong>Example:</strong></div>
+                            <div class="formula-step">Downstream IL: 179.250m</div>
+                            <div class="formula-step">Upstream IL: 179.730m</div>
+                            <div class="formula-step">Pipe length: 43.18m</div>
+                            <div class="formula-step">Design grade: 1.111% (1 in 90)</div>
                             <br>
                             <div class="formula-step"><strong>Math:</strong></div>
                             <div class="formula-step">• Design rise = 43.18 × (1.111 ÷ 100) = 0.480m</div>
@@ -542,6 +615,11 @@
                             <div class="formula-step">2. Enter the chainage/distance from start (e.g., 20.00m)</div>
                             <div class="formula-step">3. Enter the design grade (e.g., 1.111% or 1 in 90)</div>
                             <br>
+                            <div class="formula-step"><strong>Example:</strong></div>
+                            <div class="formula-step">Start IL: 179.250m</div>
+                            <div class="formula-step">Chainage: 20.00m</div>
+                            <div class="formula-step">Grade: 1.111% (1 in 90)</div>
+                            <br>
                             <div class="formula-step"><strong>Math:</strong></div>
                             <div class="formula-step">• Rise per meter = 1.111 ÷ 100 = 0.01111 m/m</div>
                             <div class="formula-step">• Total rise = 0.01111 × 20.00 = 0.222m</div>
@@ -604,49 +682,6 @@
             </div>
         </div>
 
-        <!-- Unified Message Preview Section (Always Visible) -->
-        <div class="main-content">
-            <div class="section-header" onclick="toggleSection('unifiedPreviewSection', event)">
-                <i class="fas fa-file-alt"></i>
-                <span>Unified Report Message</span>
-                <i class="fas fa-chevron-down chevron"></i>
-            </div>
-            <div class="section-content" id="unifiedPreviewSection">
-                <div class="section-inner">
-                    <div class="preview-container">
-                        <div class="preview-label">
-                            <i class="fas fa-comment-dots"></i>
-                            Combined Field Report
-                        </div>
-                        <textarea 
-                            class="preview-textarea" 
-                            id="unifiedPreviewText" 
-                            placeholder="Enter project information and add calculations to generate report..."
-                            oninput="handleUnifiedPreviewEdit()"
-                        ></textarea>
-                        <div class="format-warning hidden" id="unifiedFormatWarning">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            Manual edits will be overwritten when calculations change
-                        </div>
-                    </div>
-                    
-                    <div class="action-buttons">
-                        <button class="btn btn-success" onclick="copyUnifiedMessage()">
-                            <i class="fas fa-copy"></i>
-                            Copy Report
-                        </button>
-                        <button class="btn btn-primary" onclick="saveCurrentReport()">
-                            <i class="fas fa-save"></i>
-                            Save Report
-                        </button>
-                        <button class="btn btn-danger" onclick="clearAllData()">
-                            <i class="fas fa-trash"></i>
-                            Clear All Data
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Unified Notification -->

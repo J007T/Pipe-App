@@ -20,7 +20,8 @@ export function addPipeLevelCheckReading() {
         distance: null,
         startHeight: null,
         measuredHeight: null,
-        extraDistance: null,
+        extraDistances: [],  // Array of extra distances (numbers only)
+        extraDistanceCounter: 0,  // For generating unique IDs
         notes: '',
         calculated: false,
         results: null
@@ -86,7 +87,7 @@ export function updatePipeLevelCheckReading(index, field, value) {
     } else {
         const trimmedValue = typeof value === 'string' ? value.trim() : value;
         
-        if (field === 'slopeValue' || field === 'distance' || field === 'startHeight' || field === 'measuredHeight' || field === 'extraDistance') {
+        if (field === 'slopeValue' || field === 'distance' || field === 'startHeight' || field === 'measuredHeight') {
             if (trimmedValue === '' || trimmedValue === null) {
                 reading[field] = null;
             } else {
@@ -173,34 +174,51 @@ export function calculatePipeLevelCheckReading(index) {
 }
 
 /**
- * Update calculation with extra distance
+ * Add extra distance to reading (for report chainage only, doesn't affect calculations)
  */
-export function updatePipeLevelCheckWithExtra(index) {
+export function addExtraDistance(index) {
     const reading = appState.pipeLevelCheck.readings[index];
-    if (!reading || !reading.calculated) {
-        showNotification('No calculation to update with extra distance', 'error');
+    if (!reading) {
+        showNotification('Reading not found', 'error');
         return;
     }
     
-    const extraDistanceInput = document.getElementById(`extraDistance-${reading.id}`);
+    const extraDistanceInput = document.getElementById(`extraDistanceInput-${reading.id}`);
     const extraDistance = parseFloat(extraDistanceInput.value);
     
-    if (isNaN(extraDistance) || extraDistance === 0) {
-        showNotification('Please enter a valid extra distance', 'error');
+    if (isNaN(extraDistance) || extraDistance <= 0) {
+        showNotification('Please enter a valid distance', 'error');
         return;
     }
     
-    // Update distance and recalculate
-    reading.distance += extraDistance;
-    reading.extraDistance = extraDistance;
+    // Add to array of extra distances
+    reading.extraDistanceCounter++;
+    reading.extraDistances.push({
+        id: reading.extraDistanceCounter,
+        distance: extraDistance
+    });
     
-    // Recalculate with new distance
-    calculatePipeLevelCheckReading(index);
-    
-    // Clear extra distance input
+    // Clear input
     extraDistanceInput.value = '';
     
-    showNotification('Updated with extra distance');
+    // Re-render and update preview
+    renderPipeLevelCheckReadings();
+    updateUnifiedPreview();
+    showNotification('Extra distance added');
+}
+
+/**
+ * Remove extra distance from reading
+ */
+export function removeExtraDistance(readingIndex, extraDistanceId) {
+    const reading = appState.pipeLevelCheck.readings[readingIndex];
+    if (!reading) return;
+    
+    reading.extraDistances = reading.extraDistances.filter(ed => ed.id !== extraDistanceId);
+    
+    renderPipeLevelCheckReadings();
+    updateUnifiedPreview();
+    showNotification('Extra distance removed');
 }
 
 /**
@@ -211,6 +229,13 @@ export function toggleExtraDistanceSection(cardId) {
     if (section) {
         section.classList.toggle('hidden');
     }
+}
+
+// Expose functions to window for onclick handlers
+if (typeof window !== 'undefined') {
+    window.addExtraDistance = addExtraDistance;
+    window.removeExtraDistance = removeExtraDistance;
+    window.toggleExtraDistanceSection = toggleExtraDistanceSection;
 }
 
 /**
@@ -351,23 +376,67 @@ export function renderPipeLevelCheckReadings() {
                         
                         ${resultHtml}
                         
+                        <!-- Extra Distances Section -->
                         <div class="extra-distance-section hidden" id="extraDistanceSection-${reading.id}">
-                            <div class="form-group">
-                                <label><i class="fas fa-ruler-combined label-icon"></i>Extra Distance (m)</label>
-                                <input 
-                                    type="number" 
-                                    id="extraDistance-${reading.id}"
-                                    placeholder="e.g., 5.00"
-                                    step="0.001"
-                                >
-                                <button class="btn btn-warning" style="margin-top: 10px; width: 100%;" onclick="window.updatePipeLevelCheckWithExtra(${index})">
-                                    <i class="fas fa-sync"></i> Update with Extra Distance
-                                </button>
+                            <div style="background: var(--bg-input); border-radius: 8px; padding: 12px; margin-top: 12px; border-left: 3px solid var(--warning);">
+                                <div style="font-weight: 600; color: var(--primary); margin-bottom: 10px; font-size: 0.9rem;">
+                                    <i class="fas fa-plus-circle"></i> Extra Distances (for report chainage)
+                                </div>
+                                
+                                ${reading.extraDistances && reading.extraDistances.length > 0 ? `
+                                    <div style="margin-bottom: 12px;">
+                                        ${reading.extraDistances.map(ed => `
+                                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: var(--bg-card); border-radius: 6px; margin-bottom: 6px; border: 1px solid var(--border);">
+                                                <span style="font-weight: 600; color: var(--text-primary);">
+                                                    <i class="fas fa-arrows-alt-h" style="color: var(--warning); margin-right: 6px;"></i>
+                                                    ${ed.distance.toFixed(2)}m
+                                                </span>
+                                                <button 
+                                                    class="control-btn" 
+                                                    onclick="window.removeExtraDistance(${index}, ${ed.id})"
+                                                    title="Remove"
+                                                    style="background: var(--danger); color: white; border: none;">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                    
+                                    <div style="background: var(--bg-card); padding: 10px; border-radius: 6px; margin-bottom: 12px; border: 2px solid var(--primary);">
+                                        <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
+                                            <span style="color: var(--text-secondary);">Measured Distance:</span>
+                                            <span style="font-weight: 600;">${reading.distance.toFixed(2)}m</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-top: 4px;">
+                                            <span style="color: var(--text-secondary);">Extra Distance:</span>
+                                            <span style="font-weight: 600;">+${reading.extraDistances.reduce((sum, ed) => sum + ed.distance, 0).toFixed(2)}m</span>
+                                        </div>
+                                        <div style="border-top: 1px solid var(--border); margin: 8px 0;"></div>
+                                        <div style="display: flex; justify-content: space-between; font-size: 1rem;">
+                                            <span style="color: var(--primary); font-weight: 700;">Total Chainage:</span>
+                                            <span style="font-weight: 700; color: var(--primary);">${(reading.distance + reading.extraDistances.reduce((sum, ed) => sum + ed.distance, 0)).toFixed(2)}m</span>
+                                        </div>
+                                    </div>
+                                ` : '<div style="color: var(--text-muted); font-size: 0.85rem; font-style: italic; margin-bottom: 12px;">No extra distances added</div>'}
+                                
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label><i class="fas fa-ruler-combined label-icon"></i>Add Extra Distance (m)</label>
+                                    <input 
+                                        type="number" 
+                                        id="extraDistanceInput-${reading.id}"
+                                        placeholder="e.g., 5.00"
+                                        step="0.01"
+                                        style="margin-bottom: 8px;"
+                                    >
+                                    <button class="btn btn-warning" style="width: 100%;" onclick="window.addExtraDistance(${index})">
+                                        <i class="fas fa-plus"></i> Add Extra Distance
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         
                         <button class="btn btn-info" style="width: 100%; margin-top: 10px;" onclick="window.toggleExtraDistanceSection(${reading.id})">
-                            <i class="fas fa-plus-circle"></i> Add Extra Distance
+                            <i class="fas fa-plus-circle"></i> Extra Distances
                         </button>
                         
                         <div class="form-group">

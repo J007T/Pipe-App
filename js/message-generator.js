@@ -75,8 +75,13 @@ function generatePipeLevelCheckSection() {
         const difference = parseFloat(reading.results.difference);
         const status = reading.results.status.split(' ')[0].toUpperCase();
         
+        // Calculate total chainage (measured + extra distances)
+        const extraTotal = reading.extraDistances ? 
+            reading.extraDistances.reduce((sum, ed) => sum + ed.distance, 0) : 0;
+        const totalChainage = distance + extraTotal;
+        
         // Format with colons and signed numbers
-        section += `CH: ${distance.toFixed(2)}\n`;
+        section += `CH: ${totalChainage.toFixed(2)}\n`;
         section += `DES: ${designHeight.toFixed(3)}\n`;
         section += `AS CON: ${measuredHeight.toFixed(3)}\n`;
         
