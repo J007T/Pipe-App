@@ -30,18 +30,20 @@
                     <input type="text" class="project-input" id="unifiedProjectName" placeholder="Project Name">
                     <input type="text" class="project-input" id="unifiedStage" placeholder="Stage">
                 </div>
-                <button class="header-btn" id="loginBtn" onclick="showAuthModal('login')">
-                    <i class="fas fa-sign-in-alt"></i>
-                    Login
-                </button>
-                <button class="header-btn hidden" id="logoutBtn" onclick="logout()">
-                    <i class="fas fa-sign-out-alt"></i>
-                    Logout
-                </button>
-                <span class="user-email hidden" id="userEmail"></span>
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                    <i class="fas fa-moon"></i>
-                </button>
+                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                    <button class="header-btn" id="loginBtn" onclick="showAuthModal('login')">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Login</span>
+                    </button>
+                    <button class="header-btn hidden" id="logoutBtn" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </button>
+                    <span class="user-email hidden" id="userEmail"></span>
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
             </div>
         </header>
 

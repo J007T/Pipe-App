@@ -46,6 +46,8 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 12px;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 .project-info {
@@ -53,7 +55,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 10px;
     flex: 1;
-    margin-right: 15px;
+    min-width: 200px;
 }
 
 .project-input {
@@ -887,7 +889,7 @@
     }
 }
 
-/* Firebase Integration Styles */
+/* Header Buttons */
 .header-btn {
     background: rgba(255, 255, 255, 0.15);
     border: none;
@@ -902,6 +904,7 @@
     font-size: 0.85rem;
     font-weight: 600;
     white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .header-btn:hover {
@@ -910,17 +913,72 @@
 
 .user-email {
     color: white;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     opacity: 0.9;
-    padding: 0 10px;
+    padding: 0 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+}
+
+.theme-toggle {
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+    backdrop-filter: blur(10px);
+    flex-shrink: 0;
+    font-size: 1rem;
+}
+
+.theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.08);
+}
+
+.theme-toggle:active {
+    transform: scale(0.95);
 }
 
 @media (max-width: 480px) {
+    .header-controls {
+        gap: 8px;
+    }
+    
+    .project-info {
+        width: 100%;
+        order: -1;
+    }
+    
     .header-btn {
         padding: 6px 10px;
         font-size: 0.75rem;
     }
+    
+    .header-btn span {
+        display: none;
+    }
+    
     .header-btn i {
         font-size: 0.9rem;
+        margin: 0;
+    }
+    
+    .user-email {
+        max-width: 100px;
+        font-size: 0.7rem;
+    }
+    
+    .theme-toggle {
+        width: 36px;
+        height: 36px;
     }
 }
