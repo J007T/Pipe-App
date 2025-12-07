@@ -30,6 +30,15 @@
                     <input type="text" class="project-input" id="unifiedProjectName" placeholder="Project Name">
                     <input type="text" class="project-input" id="unifiedStage" placeholder="Stage">
                 </div>
+                <button class="header-btn" id="loginBtn" onclick="showAuthModal('login')">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Login
+                </button>
+                <button class="header-btn hidden" id="logoutBtn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+                <span class="user-email hidden" id="userEmail"></span>
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
                     <i class="fas fa-moon"></i>
                 </button>
@@ -61,6 +70,10 @@
             <button class="tab-btn" data-tab="generalnotes">
                 <i class="fas fa-sticky-note"></i>
                 <span>Notes</span>
+            </button>
+            <button class="tab-btn hidden" data-tab="savedreports" id="savedReportsTab">
+                <i class="fas fa-folder-open"></i>
+                <span>Saved</span>
             </button>
         </nav>
 
@@ -580,6 +593,10 @@
                             <i class="fas fa-copy"></i>
                             Copy Report
                         </button>
+                        <button class="btn btn-primary" onclick="saveCurrentReport()">
+                            <i class="fas fa-save"></i>
+                            Save Report
+                        </button>
                         <button class="btn btn-danger" onclick="clearAllData()">
                             <i class="fas fa-trash"></i>
                             Clear All Data
@@ -601,3 +618,131 @@
     <script type="module" src="js/app.js"></script>
 </body>
 </html>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <!-- Firebase Integration Script -->
+    <script>
+    // Initialize Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyDIW7Sd8A2Hj6WCcTOBKFMicthdCigORKQ",
+        authDomain: "purposemobile-field-tools.firebaseapp.com",
+        projectId: "purposemobile-field-tools",
+        storageBucket: "purposemobile-field-tools.firebasestorage.app",
+        messagingSenderId: "891906440026",
+        appId: "1:891906440026:web:03f19a5e56267e11e55163"
+    };
+    
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    
+    // Auth functions
+    window.showAuthModal = function(mode) {
+        const modal = document.createElement('div');
+        modal.innerHTML = `
+            <div style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;z-index:2000;" id="authModalBackdrop">
+                <div style="background:white;padding:30px;border-radius:12px;max-width:400px;width:90%;">
+                    <h2 style="margin:0 0 20px 0;">${mode === 'signup' ? 'Sign Up' : 'Login'}</h2>
+                    <input type="email" id="authEmail" placeholder="Email" style="width:100%;padding:12px;margin-bottom:12px;border:2px solid #ddd;border-radius:8px;">
+                    <input type="password" id="authPassword" placeholder="Password" style="width:100%;padding:12px;margin-bottom:12px;border:2px solid #ddd;border-radius:8px;">
+                    ${mode === 'signup' ? '<input type="password" id="authPasswordConfirm" placeholder="Confirm Password" style="width:100%;padding:12px;margin-bottom:12px;border:2px solid #ddd;border-radius:8px;">' : ''}
+                    <button onclick="window.${mode === 'signup' ? 'doSignup' : 'doLogin'}()" style="width:100%;padding:14px;background:#006699;color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;margin-bottom:12px;">${mode === 'signup' ? 'Sign Up' : 'Login'}</button>
+                    <button onclick="window.hideAuthModal()" style="width:100%;padding:14px;background:#6c757d;color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;">Cancel</button>
+                    <p style="text-align:center;margin-top:15px;font-size:0.9rem;">
+                        ${mode === 'signup' ? 'Already have an account? <a href="#" onclick="window.hideAuthModal();window.showAuthModal(\'login\');return false;">Login</a>' : 'Need an account? <a href="#" onclick="window.hideAuthModal();window.showAuthModal(\'signup\');return false;">Sign Up</a>'}
+                    </p>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal.firstElementChild);
+    };
+    
+    window.hideAuthModal = function() {
+        const modal = document.getElementById('authModalBackdrop');
+        if (modal) modal.remove();
+    };
+    
+    window.doLogin = async function() {
+        const email = document.getElementById('authEmail').value;
+        const password = document.getElementById('authPassword').value;
+        try {
+            await auth.signInWithEmailAndPassword(email, password);
+            window.hideAuthModal();
+        } catch (error) {
+            alert('Login failed: ' + error.message);
+        }
+    };
+    
+    window.doSignup = async function() {
+        const email = document.getElementById('authEmail').value;
+        const password = document.getElementById('authPassword').value;
+        const confirm = document.getElementById('authPasswordConfirm').value;
+        if (password !== confirm) {
+            alert('Passwords do not match');
+            return;
+        }
+        try {
+            await auth.createUserWithEmailAndPassword(email, password);
+            window.hideAuthModal();
+        } catch (error) {
+            alert('Signup failed: ' + error.message);
+        }
+    };
+    
+    window.logout = async function() {
+        try {
+            await auth.signOut();
+        } catch (error) {
+            alert('Logout failed: ' + error.message);
+        }
+    };
+    
+    window.saveCurrentReport = async function() {
+        if (!auth.currentUser) {
+            alert('Please login to save reports');
+            return;
+        }
+        const projectName = document.getElementById('unifiedProjectName').value;
+        const stage = document.getElementById('unifiedStage').value;
+        if (!projectName || !stage) {
+            alert('Please enter project name and stage');
+            return;
+        }
+        try {
+            await db.collection('reports').add({
+                userId: auth.currentUser.uid,
+                projectName,
+                stage,
+                timestamp: new Date(),
+                data: window.appState
+            });
+            alert('Report saved successfully!');
+        } catch (error) {
+            alert('Save failed: ' + error.message);
+        }
+    };
+    
+    // Auth state listener
+    auth.onAuthStateChanged(user => {
+        const loginBtn = document.getElementById('loginBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const userEmail = document.getElementById('userEmail');
+        
+        if (user) {
+            if (loginBtn) loginBtn.classList.add('hidden');
+            if (logoutBtn) logoutBtn.classList.remove('hidden');
+            if (userEmail) {
+                userEmail.textContent = user.email;
+                userEmail.classList.remove('hidden');
+            }
+        } else {
+            if (loginBtn) loginBtn.classList.remove('hidden');
+            if (logoutBtn) logoutBtn.classList.add('hidden');
+            if (userEmail) userEmail.classList.add('hidden');
+        }
+    });
+    </script>
