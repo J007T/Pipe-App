@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>PurposeMobile Tools - Unified Field Calculator</title>
+    <meta name="description" content="Professional construction calculator for field use - Pipe Level Check, Laser, Regrade & Grade Check tools">
+    <meta name="theme-color" content="#006699">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Field Tools">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Application CSS -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Unified Header -->
+        <header class="unified-header">
+            <h1><i class="fas fa-calculator"></i> Field Tools</h1>
+            <p class="subtitle">Pipe Level Check • Laser • Regrade • Grade Check • Chainage IL • Notes</p>
+            
+            <div class="header-controls">
+                <div class="project-info">
+                    <input type="text" class="project-input" id="unifiedProjectName" placeholder="Project Name">
+                    <input type="text" class="project-input" id="unifiedStage" placeholder="Stage">
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                    <button class="header-btn" id="loginBtn" onclick="showAuthModal('login')">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Login</span>
+                    </button>
+                    <button class="header-btn hidden" id="logoutBtn" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </button>
+                    <span class="user-email hidden" id="userEmail"></span>
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Tab Navigation -->
+        <nav class="tab-nav">
+            <button class="tab-btn active" data-tab="pipelevelcheck">
+                <i class="fas fa-ruler-combined"></i>
+                <span>Pipe Level</span>
+            </button>
+            <button class="tab-btn" data-tab="laser">
+                <i class="fas fa-bullseye"></i>
+                <span>Laser</span>
+            </button>
+            <button class="tab-btn" data-tab="regrade">
+                <i class="fas fa-exchange-alt"></i>
+                <span>Regrade</span>
+            </button>
+            <button class="tab-btn" data-tab="gradecheck">
+                <i class="fas fa-check-double"></i>
+                <span>Grade Check</span>
+            </button>
+            <button class="tab-btn" data-tab="chainageil">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Chainage IL</span>
+            </button>
+            <button class="tab-btn" data-tab="generalnotes">
+                <i class="fas fa-sticky-note"></i>
+                <span>Notes</span>
+            </button>
+            <button class="tab-btn hidden" data-tab="savedreports" id="savedReportsTab">
+                <i class="fas fa-folder-open"></i>
+                <span>Saved</span>
+            </button>
+        </nav>
+
+        <!-- Pipe Level Check Tab -->
+        <div id="pipelevelcheck-tab" class="tab-content active pipelevelcheck-tool">
+            <div class="main-content">
+                <!-- Pipe Level Check Calculations Section - Collapsed by Default -->
+                <div class="section-header collapsed" onclick="toggleSection('pipeLevelCheckSection', event)">
+                    <i class="fas fa-ruler-combined"></i>
+                    <span>Pipe Level Check Calculations</span>
+                    <i class="fas fa-chevron-down chevron"></i>
+                </div>
+                <div class="section-content collapsed" id="pipeLevelCheckSection">
+                    <div class="section-inner">
+                        <div id="pipeLevelCheckReadingsContainer"></div>
+                        
+                        <button class="btn btn-primary" id="addPipeLevelCheckReadingBtn">
+                            <i class="fas fa-plus"></i>
+                            Add Pipe Level Check
+                        </button>
+
+                        <button class="btn btn-warning clear-tool-btn" onclick="clearPipeLevelCheckToolData()">
+                            <i class="fas fa-broom"></i>
+                            Clear Pipe Level Data
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quick Guide Grade Table -->
+                <div class="reference-section">
+                    <div class="reference-header collapsed" onclick="toggleReferenceTable('pipeLevelGradeTable')">
+                        <i class="fas fa-table"></i>
+                        <span>Quick Guide Grade Table</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </div>
+                    <div class="reference-content collapsed" id="pipeLevelGradeTable">
+                        <table class="grade-table">
+                            <thead>
+                                <tr>
+                                    <th>Ratio</th>
+                                    <th>%</th>
+                                    <th>1m Rise</th>
+                                    <th>6m Rise</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1:40</td><td>2.500</td><td>25mm</td><td>150mm</td></tr>
+                                <tr><td>1:45</td><td>2.222</td><td>22mm</td><td>133mm</td></tr>
+                                <tr><td>1:50</td><td>2.000</td><td>20mm</td><td>120mm</td></tr>
+                                <tr><td>1:55</td><td>1.818</td><td>18mm</td><td>109mm</td></tr>
+                                <tr><td>1:60</td><td>1.667</td><td>17mm</td><td>100mm</td></tr>
+                                <tr><td>1:65</td><td>1.538</td><td>15mm</td><td>92mm</td></tr>
+                                <tr><td>1:70</td><td>1.429</td><td>14mm</td><td>86mm</td></tr>
+                                <tr><td>1:75</td><td>1.333</td><td>13mm</td><td>80mm</td></tr>
+                                <tr><td>1:80</td><td>1.250</td><td>13mm</td><td>75mm</td></tr>
+                                <tr><td>1:85</td><td>1.176</td><td>12mm</td><td>71mm</td></tr>
+                                <tr><td>1:90</td><td>1.111</td><td>11mm</td><td>67mm</td></tr>
+                                <tr><td>1:95</td><td>1.053</td><td>11mm</td><td>63mm</td></tr>
+                                <tr><td>1:100</td><td>1.000</td><td>10mm</td><td>60mm</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Valuations Section -->
+                <div class="reference-section">
+                    <div class="reference-header collapsed" onclick="toggleReferenceTable('pipeLevelValuations')">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Tool Valuations - Pipe Level Check</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </div>
+                    <div class="reference-content collapsed" id="pipeLevelValuations">
+                        <div class="formula-display">
+                            <div class="formula-title">Pipe Level Check Purpose:</div>
+                            <div class="formula-step">• Verify pipe installation against design levels</div>
+                            <div class="formula-step">• Calculate HIGH/LOW deviations from design</div>
+                            <div class="formula-step">• Essential for quality control and compliance</div>
+                            <br>
+                            <div class="formula-title">Field Applications:</div>
+                            <div class="formula-step">• Daily pipe installation checks</div>
+                            <div class="formula-step">• Progress verification against design</div>
+                            <div class="formula-step">• Construction quality documentation</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Laser Converter Tab -->
+        <div id="laser-tab" class="tab-content laser-tool">
+            <div class="main-content">
+                <!-- Laser Conversions Section - Collapsed by Default -->
+                <div class="section-header collapsed" onclick="toggleSection('laserConversionsSection', event)">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>Laser Grade Conversions</span>
+                    <i class="fas fa-chevron-down chevron"></i>
+                </div>
+                <div class="section-content collapsed" id="laserConversionsSection">
+                    <div class="section-inner">
+                        <div id="laserReadingsContainer"></div>
+                        
+                        <button class="btn btn-primary" id="addLaserReadingBtn">
+                            <i class="fas fa-plus"></i>
+                            Add Conversion
+                        </button>
+
+                        <button class="btn btn-warning clear-tool-btn" onclick="clearLaserToolData()">
+                            <i class="fas fa-broom"></i>
+                            Clear Laser Data
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Reference Table - Collapsed by Default -->
+                <div class="reference-section">
+                    <div class="reference-header collapsed" onclick="toggleReferenceTable('laserReference')">
+                        <i class="fas fa-table"></i>
+                        <span>Grade Reference Table</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </div>
+                    <div class="reference-content collapsed" id="laserReference">
+                        <table class="grade-table">
+                            <thead>
+                                <tr>
+                                    <th>Ratio</th>
+                                    <th>Laser %</th>
+                                    <th>1m Rise</th>
+                                    <th>6m Rise</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1:40</td><td>2.5000</td><td>25mm</td><td>150mm</td></tr>
+                                <tr><td>1:45</td><td>2.2222</td><td>22mm</td><td>133mm</td></tr>
+                                <tr><td>1:50</td><td>2.0000</td><td>20mm</td><td>120mm</td></tr>
+                                <tr><td>1:60</td><td>1.6667</td><td>17mm</td><td>100mm</td></tr>
+                                <tr><td>1:70</td><td>1.4286</td><td>14mm</td><td>86mm</td></tr>
+                                <tr><td>1:80</td><td>1.2500</td><td>13mm</td><td>75mm</td></tr>
+                                <tr><td>1:90</td><td>1.1111</td><td>11mm</td><td>67mm</td></tr>
+                                <tr><td>1:100</td><td>1.0000</td><td>10mm</td><td>60mm</td></tr>
+                                <tr><td>1:120</td><td>0.8333</td><td>8mm</td><td>50mm</td></tr>
+                                <tr><td>1:150</td><td>0.6667</td><td>7mm</td><td>40mm</td></tr>
+                                <tr><td>1:200</td><td>0.5000</td><td>5mm</td><td>30mm</td></tr>
+                                <tr><td>1:300</td><td>0.3333</td><td>3mm</td><td>20mm</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Valuations Section -->
+                <div class="reference-section">
+                    <div class="reference-header collapsed" onclick="toggleReferenceTable('laserValuations')">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Tool Valuations - Laser Converter</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </div>
+                    <div class="reference-content collapsed" id="laserValuations">
+                        <div class="formula-display">
+                            <div class="formula-title">Laser Converter Purpose:</div>
+                            <div class="formula-step">• Convert between grade ratios and laser percentages</div>
+                            <div class="formula-step">• Essential for laser level setup and verification</div>
+                            <div class="formula-step">• Maintain accuracy in grade establishment</div>
+                            <br>
+                            <div class="formula-title">Field Applications:</div>
+                            <div class="formula-step">• Laser level setup and calibration</div>
+                            <div class="formula-step">• Grade verification during construction</div>
+                            <div class="formula-step">• Design to field implementation conversion</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Regrade Tool Tab -->
+        <div id="regrade-tab" class="tab-content regrade-tool">
+            <div class="main-content">
+                <!-- Regrade Calculations Section - Collapsed by Default -->
+                <div class="section-header collapsed" onclick="toggleSection('regradeCalculationsSection', event)">
+                    <i class="fas fa-calculator"></i>
+                    <span>Regrade Calculations</span>
+                    <i class="fas fa-chevron-down chevron"></i>
+                </div>
+                <div class="section-content collapsed" id="regradeCalculationsSection">
+                    <div class="section-inner">
+                        <div id="regradeReadingsContainer"></div>
+
+                        <button class="btn btn-primary" id="addRegradeReadingBtn">
+                            <i class="fas fa-plus-circle"></i>
+                            Add Regrade Calculation
+                        </button>
+
+                        <button class="btn btn-warning clear-tool-btn" onclick="clearRegradeToolData()">
+                            <i class="fas fa-broom"></i>
+                            Clear Regrade Data
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quick Guide Grade Table -->
+                <div class="reference-section">
+                    <div class="reference-header collapsed" onclick="toggleReferenceTable('regradeGradeTable')">
+                        <i class="fas fa-table"></i>
+                        <span>Quick Guide Grade Table</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </div>
+                    <div class="reference-content collapsed" id="regradeGradeTable">
+                        <table class="grade-table">
+                            <thead>
+                                <tr>
+                                    <th>Ratio</th>
+                                    <th>%</th>
+                                    <th>1m Rise</th>
+                                    <th>6m Rise</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1:40</td><td>2.500</td><td>25mm</td><td>150mm</td></tr>
+                                <tr><td>1:45</td><td>2.222</td><td>22mm</td><td>133mm</td></tr>
+                                <tr><td>1:50</td><td>2.000</td><td>20mm</td><td>120mm</td></tr>
+                                <tr><td>1:55</td><td>1.818</td><td>18mm</td><td>109mm</td></tr>
+                                <tr><td>1:60</td><td>1.667</td><td>17mm</td><td>100mm</td></tr>
+                                <tr><td>1:65</td><td>1.538</td><td>15mm</td><td>92mm</td></tr>
+                                <tr><td>1:70</td><td>1.429</td><td>14mm</td><td>86mm</td></tr>
+                                <tr><td>1:75</td><td>1.333</td><td>13mm</td><td>80mm</td></tr>
+                                <tr><td>1:80</td><td>1.250</td><td>13mm</td><td>75mm</td></tr>
+                                <tr><td>1:85</td><td>1.176</td><td>12mm</td><td>71mm</td></tr>
+                                <tr><td>1:90</td><td>1.111</td><td>11mm</td><td>67mm</td></tr>
+                                <tr><td>1:95</td><td>1.053</td><td>11mm</td><td>63mm</td></tr>
+                                <tr><td>1:100</td><td>1.000</td><td>10mm</td><td>60mm</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Valuations Section -->
+                <div class="reference-section">
+                    <div class="reference-header collapsed" onclick="toggleReferenceTable('regradeValuations')">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Tool Valuations - Regrade Tool</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </div>
+                    <div class="reference-content collapsed" id="regradeValuations">
+                        <div class="formula-display">
+                            <div class="formula-title">Regrade Tool Purpose:</div>
+                            <div class="formula-step">• Calculate required grade changes between points</div>
+                            <div class="formula-step">• Determine new grades to achieve target levels</div>
+                            <div class="formula-step">• Essential for construction adjustments and corrections</div>
+                            <br>
+                            <div class="formula-title">Field Applications:</div>
+                            <div class="formula-step">• Construction grade adjustments</div>
+                            <div class="formula-step">• Problem-solving level discrepancies</div>
+                            <div class="formula-step">• Design modification calculations</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grade Check Tab -->
+        <div id="gradecheck-tab" class="tab-content gradecheck-tool">
+            <div class="main-content">
+                <!-- Grade Verifications Section - Collapsed by Default -->
+                <div class="section-header collapsed" onclick="toggleSection('gradeCheckVerifications', event)">
+                    <i class="fas fa-check-double"></i>
+                    <span>Grade Verifications</span>
+                    <i class="fas fa-chevron-down chevron"></i>
+                </div>
+                <div class="section-content collapsed" id="gradeCheckVerifications">
+                    <div class="section-inner">
+                        <div id="gradeCheckReadingsContainer"></div>
+
+                        <button class="btn btn-secondary" id="addGradeCheckReadingBtn">
+                            <i class="fas fa-plus-circle"></i>
+                            Add Verification Section
+                        </button>
+
+                        <button class="btn btn-warning clear-tool-btn" onclick="clearGradeCheckToolData()">
+                            <i class="fas fa-broom"></i>
+                            Clear Grade Check Data
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quick Guide Grade Table -->
+                <div class="reference-section">
+                    <div class="reference-header collapsed" onclick="toggleReferenceTable('gradeCheckGradeTable')">
+                        <i class="fas fa-table"></i>
+                        <span>Quick Guide Grade Table</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </div>
+                    <div class="reference-content collapsed" id="gradeCheckGradeTable">
+                        <table class="grade-table">
+                            <thead>
+                                <tr>
+                                    <th>Ratio</th>
+                                    <th>%</th>
+                                    <th>1m Rise</th>
+                                    <th>6m Rise</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1:40</td><td>2.500</td><td>25mm</td><td>150mm</td></tr>
+                                <tr><td>1:45</td><td>2.222</td><td>22mm</td><td>133mm</td></tr>
+                                <tr><td>1:50</td><td>2.000</td><td>20mm</td><td>120mm</td></tr>
+                                <tr><td>1:55</td><td>1.818</td><td>18mm</td><td>109mm</td></tr>
+                                <tr><td>1:60</td><td>1.667</td><td>17mm</td><td>100mm</td></tr>
+                                <tr><td>1:65</td><td>1.538</td><td>15mm</td><td>92mm</td></tr>
+                                <tr><td>1:70</td><td>1.429</td><td>14mm</td><td>86mm</td></tr>
+                                <tr><td>1:75</td><td>1.333</td><td>13mm</td><td>80mm</td></tr>
+                                <tr><td>1:80</td><td>1.250</td><td>13mm</td><td>75mm</td></tr>
+                                <tr><td>1:85</td><td>1.176</td><td>12mm</td><td>71mm</td></tr>
+                                <tr><td>1:90</td><td>1.111</td><td>11mm</td><td>67mm</td></tr>
+                                <tr><td>1:95</td><td>1.053</td><td>11mm</td><td>63mm</td></tr>
+                                <tr><td>1:100</td><td>1.000</td><td>10mm</td><td>60mm</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Valuations Section -->
+                <div class="reference-section">
+                    <div class="reference-header collapsed" onclick="toggleReferenceTable('gradeCheckValuations')">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Tool Valuations - Grade Check</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </div>
+                    <div class="reference-content collapsed" id="gradeCheckValuations">
+                        <div class="formula-display">
+                            <div class="formula-title">Grade Check Purpose:</div>
+                            <div class="formula-step">• Verify as-constructed grades against design grades</div>
+                            <div class="formula-step">• Calculate percentage and rise/fall differences</div>
+                            <div class="formula-step">• Essential for quality assurance and compliance</div>
+                            <br>
+                            <div class="formula-title">Field Applications:</div>
+                            <div class="formula-step">• Construction quality verification</div>
+                            <div class="formula-step">• Compliance documentation</div>
+                            <div class="formula-step">• Progress payment verification</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chainage IL Tab -->
+        <div id="chainageil-tab" class="tab-content chainageil-tool">
+            <div class="main-content">
+                <!-- Chainage IL Calculations Section - Collapsed by Default -->
+                <div class="section-header collapsed" onclick="toggleSection('chainageILSection', event)">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Chainage IL Calculations</span>
+                    <i class="fas fa-chevron-down chevron"></i>
+                </div>
+                <div class="section-content collapsed" id="chainageILSection">
+                    <div class="section-inner">
+                        <div id="chainageILReadingsContainer"></div>
+                        
+                        <button class="btn btn-primary" id="addChainageILReadingBtn">
+                            <i class="fas fa-plus"></i>
+                            Add Chainage Calculation
+                        </button>
+
+                        <button class="btn btn-warning clear-tool-btn" onclick="clearChainageILToolData()">
+                            <i class="fas fa-broom"></i>
+                            Clear Chainage Data
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Reference Table - Collapsed by Default -->
+                <div class="reference-section">
+                    <div class="reference-header collapsed" onclick="toggleReferenceTable('chainageILReference')">
+                        <i class="fas fa-table"></i>
+                        <span>Quick Grade Reference</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </div>
+                    <div class="reference-content collapsed" id="chainageILReference">
+                        <table class="grade-table">
+                            <thead>
+                                <tr>
+                                    <th>Ratio</th>
+                                    <th>%</th>
+                                    <th>1m Rise</th>
+                                    <th>6m Rise</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>1:40</td><td>2.500</td><td>25mm</td><td>150mm</td></tr>
+                                <tr><td>1:45</td><td>2.222</td><td>22mm</td><td>133mm</td></tr>
+                                <tr><td>1:50</td><td>2.000</td><td>20mm</td><td>120mm</td></tr>
+                                <tr><td>1:55</td><td>1.818</td><td>18mm</td><td>109mm</td></tr>
+                                <tr><td>1:60</td><td>1.667</td><td>17mm</td><td>100mm</td></tr>
+                                <tr><td>1:65</td><td>1.538</td><td>15mm</td><td>92mm</td></tr>
+                                <tr><td>1:70</td><td>1.429</td><td>14mm</td><td>86mm</td></tr>
+                                <tr><td>1:75</td><td>1.333</td><td>13mm</td><td>80mm</td></tr>
+                                <tr><td>1:80</td><td>1.250</td><td>13mm</td><td>75mm</td></tr>
+                                <tr><td>1:85</td><td>1.176</td><td>12mm</td><td>71mm</td></tr>
+                                <tr><td>1:90</td><td>1.111</td><td>11mm</td><td>67mm</td></tr>
+                                <tr><td>1:95</td><td>1.053</td><td>11mm</td><td>63mm</td></tr>
+                                <tr><td>1:100</td><td>1.000</td><td>10mm</td><td>60mm</td></tr>
+                                <tr><td>1:110</td><td>0.909</td><td>9mm</td><td>55mm</td></tr>
+                                <tr><td>1:120</td><td>0.833</td><td>8mm</td><td>50mm</td></tr>
+                                <tr><td>1:130</td><td>0.769</td><td>8mm</td><td>46mm</td></tr>
+                                <tr><td>1:140</td><td>0.714</td><td>7mm</td><td>43mm</td></tr>
+                                <tr><td>1:150</td><td>0.667</td><td>7mm</td><td>40mm</td></tr>
+                                <tr><td>1:160</td><td>0.625</td><td>6mm</td><td>38mm</td></tr>
+                                <tr><td>1:180</td><td>0.556</td><td>6mm</td><td>33mm</td></tr>
+                                <tr><td>1:200</td><td>0.500</td><td>5mm</td><td>30mm</td></tr>
+                                <tr><td>1:250</td><td>0.400</td><td>4mm</td><td>24mm</td></tr>
+                                <tr><td>1:300</td><td>0.333</td><td>3mm</td><td>20mm</td></tr>
+                                <tr><td>1:400</td><td>0.250</td><td>3mm</td><td>15mm</td></tr>
+                                <tr><td>1:500</td><td>0.200</td><td>2mm</td><td>12mm</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Valuations Section -->
+                <div class="reference-section">
+                    <div class="reference-header collapsed" onclick="toggleReferenceTable('chainageValuations')">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Tool Valuations - Chainage IL</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </div>
+                    <div class="reference-content collapsed" id="chainageValuations">
+                        <div class="formula-display">
+                            <div class="formula-title">Chainage IL Purpose:</div>
+                            <div class="formula-step">• Calculate invert levels at any chainage along pipeline</div>
+                            <div class="formula-step">• Essential for setting out and verification</div>
+                            <div class="formula-step">• Maintain design integrity throughout construction</div>
+                            <br>
+                            <div class="formula-title">Field Applications:</div>
+                            <div class="formula-step">• Pipeline set out and establishment</div>
+                            <div class="formula-step">• Construction verification at intermediate points</div>
+                            <div class="formula-step">• Design implementation and checking</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- General Notes Tab -->
+        <div id="generalnotes-tab" class="tab-content generalnotes-tool">
+            <div class="main-content">
+                <!-- General Notes Section - Collapsed by Default -->
+                <div class="section-header collapsed" onclick="toggleSection('generalNotesSection', event)">
+                    <i class="fas fa-sticky-note"></i>
+                    <span>General Notes</span>
+                    <i class="fas fa-chevron-down chevron"></i>
+                </div>
+                <div class="section-content collapsed" id="generalNotesSection">
+                    <div class="section-inner">
+                        <div id="generalNotesContainer"></div>
+                        
+                        <button class="btn btn-primary" id="addGeneralNoteBtn">
+                            <i class="fas fa-plus"></i>
+                            Add Note
+                        </button>
+
+                        <button class="btn btn-warning clear-tool-btn" onclick="clearGeneralNotesData()">
+                            <i class="fas fa-broom"></i>
+                            Clear All Notes
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Valuations Section -->
+                <div class="reference-section">
+                    <div class="reference-header collapsed" onclick="toggleReferenceTable('notesValuations')">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Tool Valuations - General Notes</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </div>
+                    <div class="reference-content collapsed" id="notesValuations">
+                        <div class="formula-display">
+                            <div class="formula-title">General Notes Purpose:</div>
+                            <div class="formula-step">• Document field observations and conditions</div>
+                            <div class="formula-step">• Record construction progress and issues</div>
+                            <div class="formula-step">• Essential for comprehensive project documentation</div>
+                            <br>
+                            <div class="formula-title">Field Applications:</div>
+                            <div class="formula-step">• Daily site diary and observations</div>
+                            <div class="formula-step">• Construction progress recording</div>
+                            <div class="formula-step">• Issue tracking and resolution documentation</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unified Message Preview Section (Always Visible) -->
+        <div class="main-content">
+            <div class="section-header" onclick="toggleSection('unifiedPreviewSection', event)">
+                <i class="fas fa-file-alt"></i>
+                <span>Unified Report Message</span>
+                <i class="fas fa-chevron-down chevron"></i>
+            </div>
+            <div class="section-content" id="unifiedPreviewSection">
+                <div class="section-inner">
+                    <div class="preview-container">
+                        <div class="preview-label">
+                            <i class="fas fa-comment-dots"></i>
+                            Combined Field Report
+                        </div>
+                        <textarea 
+                            class="preview-textarea" 
+                            id="unifiedPreviewText" 
+                            placeholder="Enter project information and add calculations to generate report..."
+                            oninput="handleUnifiedPreviewEdit()"
+                        ></textarea>
+                        <div class="format-warning hidden" id="unifiedFormatWarning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Manual edits will be overwritten when calculations change
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="btn btn-success" onclick="copyUnifiedMessage()">
+                            <i class="fas fa-copy"></i>
+                            Copy Report
+                        </button>
+                        <button class="btn btn-primary" onclick="saveCurrentReport()">
+                            <i class="fas fa-save"></i>
+                            Save Report
+                        </button>
+                        <button class="btn btn-danger" onclick="clearAllData()">
+                            <i class="fas fa-trash"></i>
+                            Clear All Data
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Unified Notification -->
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle" id="notificationIcon"></i>
+        <span id="notificationText">Operation completed</span>
+    </div>
+
+    
+    <!-- Application JavaScript (ES6 Modules) -->
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <!-- Firebase Integration Script -->
+    <script>
+    // Initialize Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyDIW7Sd8A2Hj6WCcTOBKFMicthdCigORKQ",
+        authDomain: "purposemobile-field-tools.firebaseapp.com",
+        projectId: "purposemobile-field-tools",
+        storageBucket: "purposemobile-field-tools.firebasestorage.app",
+        messagingSenderId: "891906440026",
+        appId: "1:891906440026:web:03f19a5e56267e11e55163"
+    };
+    
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    
+    // Auth functions
+    window.showAuthModal = function(mode) {
+        const modal = document.createElement('div');
+        modal.innerHTML = `
+            <div style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;z-index:2000;" id="authModalBackdrop">
+                <div style="background:white;padding:30px;border-radius:12px;max-width:400px;width:90%;">
+                    <h2 style="margin:0 0 20px 0;">${mode === 'signup' ? 'Sign Up' : 'Login'}</h2>
+                    <input type="email" id="authEmail" placeholder="Email" style="width:100%;padding:12px;margin-bottom:12px;border:2px solid #ddd;border-radius:8px;">
+                    <input type="password" id="authPassword" placeholder="Password" style="width:100%;padding:12px;margin-bottom:12px;border:2px solid #ddd;border-radius:8px;">
+                    ${mode === 'signup' ? '<input type="password" id="authPasswordConfirm" placeholder="Confirm Password" style="width:100%;padding:12px;margin-bottom:12px;border:2px solid #ddd;border-radius:8px;">' : ''}
+                    <button onclick="window.${mode === 'signup' ? 'doSignup' : 'doLogin'}()" style="width:100%;padding:14px;background:#006699;color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;margin-bottom:12px;">${mode === 'signup' ? 'Sign Up' : 'Login'}</button>
+                    <button onclick="window.hideAuthModal()" style="width:100%;padding:14px;background:#6c757d;color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;">Cancel</button>
+                    <p style="text-align:center;margin-top:15px;font-size:0.9rem;">
+                        ${mode === 'signup' ? 'Already have an account? <a href="#" onclick="window.hideAuthModal();window.showAuthModal(\'login\');return false;">Login</a>' : 'Need an account? <a href="#" onclick="window.hideAuthModal();window.showAuthModal(\'signup\');return false;">Sign Up</a>'}
+                    </p>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal.firstElementChild);
+    };
+    
+    window.hideAuthModal = function() {
+        const modal = document.getElementById('authModalBackdrop');
+        if (modal) modal.remove();
+    };
+    
+    window.doLogin = async function() {
+        const email = document.getElementById('authEmail').value;
+        const password = document.getElementById('authPassword').value;
+        try {
+            await auth.signInWithEmailAndPassword(email, password);
+            window.hideAuthModal();
+        } catch (error) {
+            alert('Login failed: ' + error.message);
+        }
+    };
+    
+    window.doSignup = async function() {
+        const email = document.getElementById('authEmail').value;
+        const password = document.getElementById('authPassword').value;
+        const confirm = document.getElementById('authPasswordConfirm').value;
+        if (password !== confirm) {
+            alert('Passwords do not match');
+            return;
+        }
+        try {
+            await auth.createUserWithEmailAndPassword(email, password);
+            window.hideAuthModal();
+        } catch (error) {
+            alert('Signup failed: ' + error.message);
+        }
+    };
+    
+    window.logout = async function() {
+        try {
+            await auth.signOut();
+        } catch (error) {
+            alert('Logout failed: ' + error.message);
+        }
+    };
+    
+    window.saveCurrentReport = async function() {
+        if (!auth.currentUser) {
+            alert('Please login to save reports');
+            return;
+        }
+        const projectName = document.getElementById('unifiedProjectName').value;
+        const stage = document.getElementById('unifiedStage').value;
+        if (!projectName || !stage) {
+            alert('Please enter project name and stage');
+            return;
+        }
+        
+        // Check if appState exists
+        if (!window.appState) {
+            alert('App is still loading, please try again in a moment');
+            return;
+        }
+        
+        try {
+            // Create a clean copy of appState without undefined values
+            const reportData = {
+                userId: auth.currentUser.uid,
+                userEmail: auth.currentUser.email,
+                projectName: projectName,
+                stage: stage,
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+                pipeLevelCheck: window.appState.pipeLevelCheck || { readings: [], readingCounter: 0 },
+                laser: window.appState.laser || { readings: [], readingCounter: 0 },
+                regrade: window.appState.regrade || { readings: [], readingCounter: 0 },
+                gradeCheck: window.appState.gradeCheck || { readings: [], readingCounter: 0 },
+                chainageIL: window.appState.chainageIL || { readings: [], readingCounter: 0 },
+                generalNotes: window.appState.generalNotes || { notes: [], noteCounter: 0 }
+            };
+            
+            await db.collection('reports').add(reportData);
+            alert('Report saved successfully!');
+        } catch (error) {
+            console.error('Save error:', error);
+            alert('Save failed: ' + error.message);
+        }
+    };
+    
+    // Auth state listener
+    auth.onAuthStateChanged(user => {
+        const loginBtn = document.getElementById('loginBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const userEmail = document.getElementById('userEmail');
+        
+        if (user) {
+            if (loginBtn) loginBtn.classList.add('hidden');
+            if (logoutBtn) logoutBtn.classList.remove('hidden');
+            if (userEmail) {
+                userEmail.textContent = user.email;
+                userEmail.classList.remove('hidden');
+            }
+        } else {
+            if (loginBtn) loginBtn.classList.remove('hidden');
+            if (logoutBtn) logoutBtn.classList.add('hidden');
+            if (userEmail) userEmail.classList.add('hidden');
+        }
+    });
+    </script>
