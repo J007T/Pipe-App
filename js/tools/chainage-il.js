@@ -3,7 +3,7 @@
  * Calculates invert level at any chainage along pipeline
  */
 
-import { appState } from '../state.js';
+import { appState, autoSaveState } from '../state.js';
 import { showNotification, formatRatio } from '../ui.js';
 import { updateUnifiedPreview } from '../message-generator.js';
 
@@ -47,6 +47,7 @@ export function addChainageILReading() {
     renderChainageILReadings();
     updateUnifiedPreview();
     showNotification('Chainage calculation added');
+    autoSaveState();
 }
 
 /**
@@ -63,6 +64,7 @@ export function deleteChainageILReading(id) {
     appState.manualPreviewEdit = false;
     updateUnifiedPreview();
     showNotification('Calculation deleted');
+    autoSaveState();
 }
 
 /**
@@ -76,6 +78,7 @@ export function moveChainageILReadingUp(index) {
     appState.manualPreviewEdit = false;
     updateUnifiedPreview();
     showNotification('Calculation moved up');
+    autoSaveState();
 }
 
 /**
@@ -89,6 +92,7 @@ export function moveChainageILReadingDown(index) {
     appState.manualPreviewEdit = false;
     updateUnifiedPreview();
     showNotification('Calculation moved down');
+    autoSaveState();
 }
 
 /**
@@ -129,6 +133,7 @@ export function updateChainageILReading(index, field, value) {
     renderChainageILReadings();
     appState.manualPreviewEdit = false;
     updateUnifiedPreview();
+    autoSaveState();
 }
 
 /**
@@ -136,6 +141,7 @@ export function updateChainageILReading(index, field, value) {
  */
 export function toggleChainageILGradeMode(index, mode) {
     updateChainageILReading(index, 'gradeMode', mode);
+    autoSaveState();
 }
 
 /**
@@ -171,6 +177,7 @@ export function calculateChainageILReading(index) {
     renderChainageILReadings();
     appState.manualPreviewEdit = false;
     updateUnifiedPreview();
+    autoSaveState();
 }
 
 /**
@@ -192,10 +199,10 @@ export function renderChainageILReadings() {
         if (reading.gradeValue !== null && reading.gradeValue > 0) {
             if (reading.gradeMode === 'percent') {
                 const calc = calculateGradeValues('percent', reading.gradeValue);
-                converterHtml = `<div class="converter-text">≈ 1 in ${formatRatio(calc.ratio)} | Rise: ${calc.risePerMeter.toFixed(4)} m/m</div>`;
+                converterHtml = `<div class="converter-text">â‰ˆ 1 in ${formatRatio(calc.ratio)} | Rise: ${calc.risePerMeter.toFixed(4)} m/m</div>`;
             } else {
                 const calc = calculateGradeValues('ratio', reading.gradeValue);
-                converterHtml = `<div class="converter-text">≈ ${calc.percent.toFixed(3)}% | Rise: ${calc.risePerMeter.toFixed(4)} m/m</div>`;
+                converterHtml = `<div class="converter-text">â‰ˆ ${calc.percent.toFixed(3)}% | Rise: ${calc.risePerMeter.toFixed(4)} m/m</div>`;
             }
         }
         
@@ -306,8 +313,8 @@ export function renderChainageILReadings() {
                         
                         <div class="formula-display">
                             <div class="formula-title">Calculation Steps:</div>
-                            <div class="formula-step">1. Rise per metre = Grade % ÷ 100 OR 1 ÷ Ratio</div>
-                            <div class="formula-step">2. Total Rise = Rise per metre × Distance</div>
+                            <div class="formula-step">1. Rise per metre = Grade % Ã· 100 OR 1 Ã· Ratio</div>
+                            <div class="formula-step">2. Total Rise = Rise per metre Ã— Distance</div>
                             <div class="formula-step">3. IL at Chainage = Start IL + Total Rise</div>
                         </div>
                         
@@ -322,34 +329,12 @@ export function renderChainageILReadings() {
             </div>
         `;
     }).join('');
-    
-    // Add event listeners for radio buttons
-    appState.chainageIL.readings.forEach((reading, index) => {
-        const percentRadio = document.getElementById(`chainagePercent-${reading.id}`);
-        const ratioRadio = document.getElementById(`chainageRatio-${reading.id}`);
-        
-        if (percentRadio) {
-            percentRadio.addEventListener('change', () => {
-                if (percentRadio.checked) {
-                    toggleChainageILGradeMode(index, 'percent');
-                }
-            });
-        }
-        
-        if (ratioRadio) {
-            ratioRadio.addEventListener('change', () => {
-                if (ratioRadio.checked) {
-                    toggleChainageILGradeMode(index, 'ratio');
-                }
-            });
-        }
-    });
 }
 
 /**
  * Clear all chainage IL data
  */
-export function clearChainageILToolData() {
+export function clearChainageILData() {
     if (appState.chainageIL.readings.length === 0) {
         showNotification('No chainage data to clear', 'warning');
         return;
@@ -363,4 +348,5 @@ export function clearChainageILToolData() {
     addChainageILReading(); // Add one empty reading back
     updateUnifiedPreview();
     showNotification('Chainage data cleared');
+    autoSaveState();
 }

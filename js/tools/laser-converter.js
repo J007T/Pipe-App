@@ -3,7 +3,7 @@
  * Converts between grade ratios and laser percentages
  */
 
-import { appState } from '../state.js';
+import { appState, autoSaveState } from '../state.js';
 import { showNotification, formatRatio } from '../ui.js';
 import { updateUnifiedPreview } from '../message-generator.js';
 
@@ -24,6 +24,7 @@ export function addLaserReading() {
     renderLaserReadings();
     updateUnifiedPreview();
     showNotification('Laser conversion added');
+    autoSaveState();
 }
 
 /**
@@ -40,6 +41,7 @@ export function deleteLaserReading(id) {
     appState.manualPreviewEdit = false;
     updateUnifiedPreview();
     showNotification('Conversion deleted');
+    autoSaveState();
 }
 
 /**
@@ -53,6 +55,7 @@ export function moveLaserReadingUp(index) {
     appState.manualPreviewEdit = false;
     updateUnifiedPreview();
     showNotification('Conversion moved up');
+    autoSaveState();
 }
 
 /**
@@ -66,11 +69,12 @@ export function moveLaserReadingDown(index) {
     appState.manualPreviewEdit = false;
     updateUnifiedPreview();
     showNotification('Conversion moved down');
+    autoSaveState();
 }
 
 /**
  * Update laser reading field
- * Automatically calculates the opposite value (ratio ↔ percent)
+ * Automatically calculates the opposite value (ratio â†” percent)
  */
 export function updateLaserReading(index, field, value) {
     const reading = appState.laser.readings[index];
@@ -107,6 +111,7 @@ export function updateLaserReading(index, field, value) {
     renderLaserReadings();
     appState.manualPreviewEdit = false;
     updateUnifiedPreview();
+    autoSaveState();
 }
 
 /**
@@ -230,4 +235,5 @@ export function clearLaserToolData() {
     addLaserReading(); // Add one empty reading back
     updateUnifiedPreview();
     showNotification('Laser data cleared');
+    autoSaveState();
 }

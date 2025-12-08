@@ -3,7 +3,7 @@
  * Verifies as-constructed grades against design specifications
  */
 
-import { appState } from '../state.js';
+import { appState, autoSaveState } from '../state.js';
 import { showNotification } from '../ui.js';
 import { updateUnifiedPreview } from '../message-generator.js';
 
@@ -37,6 +37,7 @@ export function addGradeCheckReading() {
     renderGradeCheckReadings();
     updateUnifiedPreview();
     showNotification('Verification section added');
+    autoSaveState();
 }
 
 /**
@@ -52,6 +53,7 @@ export function removeGradeCheckReading(id) {
     renderGradeCheckReadings();
     updateUnifiedPreview();
     showNotification('Section removed');
+    autoSaveState();
 }
 
 /**
@@ -64,6 +66,7 @@ export function moveGradeCheckReadingUp(index) {
     renderGradeCheckReadings();
     updateUnifiedPreview();
     showNotification('Section moved up');
+    autoSaveState();
 }
 
 /**
@@ -76,6 +79,7 @@ export function moveGradeCheckReadingDown(index) {
     renderGradeCheckReadings();
     updateUnifiedPreview();
     showNotification('Section moved down');
+    autoSaveState();
 }
 
 /**
@@ -116,7 +120,7 @@ export function updateGradeCheckReading(id) {
         // Convert design grade to percentage (full precision)
         const designGradePercent = reading.gradeMode === 'percent' ? 
             designGrade : 
-            100 / designGrade;
+            (100 / designGrade);
         
         // Design calculations (full precision)
         reading.designRise = length * (designGradePercent / 100);
@@ -162,6 +166,7 @@ export function updateGradeCheckReading(id) {
     
     appState.manualPreviewEdit = false;
     updateUnifiedPreview();
+    autoSaveState();
 }
 
 /**
@@ -187,6 +192,7 @@ export function toggleGradeCheckGradeMode(id, mode) {
     appState.manualPreviewEdit = false;
     updateUnifiedPreview();
     showNotification(`Switched to ${mode === 'percent' ? 'percentage' : 'ratio'} mode`);
+    autoSaveState();
 }
 
 /**
@@ -308,4 +314,5 @@ export function clearGradeCheckToolData() {
     addGradeCheckReading(); // Add one empty reading back
     updateUnifiedPreview();
     showNotification('Grade check data cleared');
+    autoSaveState();
 }

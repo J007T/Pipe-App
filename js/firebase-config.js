@@ -31,10 +31,10 @@ export function initializeFirebase(firebase) {
     auth = firebase.getAuth(app);
     db = firebase.getFirestore(app);
     
-    console.log('✅ Firebase initialized successfully');
+    console.log('âœ… Firebase initialized successfully');
     return { app, auth, db };
   } catch (error) {
-    console.error('❌ Firebase initialization error:', error);
+    console.error('âŒ Firebase initialization error:', error);
     throw error;
   }
 }

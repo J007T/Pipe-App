@@ -202,5 +202,8 @@ export function copyUnifiedMessage() {
  * Utility Functions
  */
 export function formatRatio(value) {
-    return Number.isInteger(value) ? value.toString() : value.toFixed(3);
+    if (value === null || value === undefined || value === '') return '--';
+    const num = parseFloat(value);
+    if (isNaN(num)) return '--';
+    return Number.isInteger(num) ? num.toString() : num.toFixed(3);
 }

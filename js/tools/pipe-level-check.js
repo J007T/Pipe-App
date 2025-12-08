@@ -3,7 +3,7 @@
  * Verifies pipe installation against design levels
  */
 
-import { appState } from '../state.js';
+import { appState, autoSaveState } from '../state.js';
 import { showNotification, formatRatio } from '../ui.js';
 import { updateUnifiedPreview } from '../message-generator.js';
 
@@ -31,6 +31,7 @@ export function addPipeLevelCheckReading() {
     renderPipeLevelCheckReadings();
     updateUnifiedPreview();
     showNotification('Pipe level check added');
+    autoSaveState();
 }
 
 /**
@@ -47,6 +48,7 @@ export function deletePipeLevelCheckReading(id) {
     appState.manualPreviewEdit = false;
     updateUnifiedPreview();
     showNotification('Check deleted');
+    autoSaveState();
 }
 
 /**
@@ -60,6 +62,7 @@ export function movePipeLevelCheckReadingUp(index) {
     appState.manualPreviewEdit = false;
     updateUnifiedPreview();
     showNotification('Check moved up');
+    autoSaveState();
 }
 
 /**
@@ -73,6 +76,7 @@ export function movePipeLevelCheckReadingDown(index) {
     appState.manualPreviewEdit = false;
     updateUnifiedPreview();
     showNotification('Check moved down');
+    autoSaveState();
 }
 
 /**
@@ -113,6 +117,7 @@ export function updatePipeLevelCheckReading(index, field, value) {
     renderPipeLevelCheckReadings();
     appState.manualPreviewEdit = false;
     updateUnifiedPreview();
+    autoSaveState();
 }
 
 /**
@@ -120,6 +125,7 @@ export function updatePipeLevelCheckReading(index, field, value) {
  */
 export function togglePipeLevelCheckSlopeMode(index, mode) {
     updatePipeLevelCheckReading(index, 'slopeMode', mode);
+    autoSaveState();
 }
 
 /**
@@ -171,6 +177,7 @@ export function calculatePipeLevelCheckReading(index) {
     renderPipeLevelCheckReadings();
     appState.manualPreviewEdit = false;
     updateUnifiedPreview();
+    autoSaveState();
 }
 
 /**
@@ -205,6 +212,7 @@ export function addExtraDistance(index) {
     renderPipeLevelCheckReadings();
     updateUnifiedPreview();
     showNotification('Extra distance added');
+    autoSaveState();
 }
 
 /**
@@ -219,6 +227,7 @@ export function removeExtraDistance(readingIndex, extraDistanceId) {
     renderPipeLevelCheckReadings();
     updateUnifiedPreview();
     showNotification('Extra distance removed');
+    autoSaveState();
 }
 
 /**
@@ -263,10 +272,10 @@ export function renderPipeLevelCheckReadings() {
         if (reading.slopeValue !== null && reading.slopeValue > 0) {
             if (reading.slopeMode === 'percent') {
                 const ratio = 100 / reading.slopeValue;
-                converterHtml = `<div class="converter-text">≈ 1 in ${formatRatio(ratio)} | Rise: ${(reading.slopeValue / 100).toFixed(4)} m/m</div>`;
+                converterHtml = `<div class="converter-text">â‰ˆ 1 in ${formatRatio(ratio)} | Rise: ${(reading.slopeValue / 100).toFixed(4)} m/m</div>`;
             } else {
                 const percent = 100 / reading.slopeValue;
-                converterHtml = `<div class="converter-text">≈ ${percent.toFixed(3)}% | Rise: ${(1 / reading.slopeValue).toFixed(4)} m/m</div>`;
+                converterHtml = `<div class="converter-text">â‰ˆ ${percent.toFixed(3)}% | Rise: ${(1 / reading.slopeValue).toFixed(4)} m/m</div>`;
             }
         }
         
@@ -288,7 +297,7 @@ export function renderPipeLevelCheckReadings() {
                 <div class="reading-card-header" onclick="window.toggleReadingCard('pipeLevelCheckReading-${reading.id}')">
                     <div class="reading-number">
                         <i class="fas fa-ruler-combined"></i>
-                        Check ${index + 1}${hasCalculation ? ` • ${reading.results.status}` : ''}
+                        Check ${index + 1}${hasCalculation ? ` â€¢ ${reading.results.status}` : ''}
                     </div>
                     <div class="reading-controls">
                         <button class="control-btn" onclick="event.stopPropagation(); window.movePipeLevelCheckReadingUp(${index})" ${index === 0 ? 'disabled' : ''} title="Move Up">
@@ -475,4 +484,5 @@ export function clearPipeLevelCheckToolData() {
     addPipeLevelCheckReading(); // Add one empty reading back
     updateUnifiedPreview();
     showNotification('Pipe level data cleared');
+    autoSaveState();
 }

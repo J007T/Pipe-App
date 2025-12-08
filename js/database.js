@@ -13,7 +13,7 @@ let db = null;
  */
 export function initDatabase(firestore) {
   db = firestore;
-  console.log('✅ Database initialized');
+  console.log('âœ… Database initialized');
 }
 
 /**
@@ -54,7 +54,7 @@ export async function saveReport(appState, projectName, stage) {
     const docRef = await db.collection('reports').add(reportData);
     
     showNotification('Report saved successfully!');
-    console.log('✅ Report saved with ID:', docRef.id);
+    console.log('âœ… Report saved with ID:', docRef.id);
     
     return docRef.id;
   } catch (error) {
@@ -68,19 +68,19 @@ export async function saveReport(appState, projectName, stage) {
  * Load all reports for current user
  */
 export async function loadUserReports() {
-  console.log('🔍 loadUserReports called');
+  console.log('ðŸ” loadUserReports called');
   
   const user = getCurrentUser();
   console.log('Current user:', user ? user.email : 'Not logged in');
   
   if (!user) {
     // Don't show notification - let UI handle it
-    console.log('⚠️ No user logged in for reports');
+    console.log('âš ï¸ No user logged in for reports');
     return [];
   }
   
   try {
-    console.log('📡 Fetching reports from Firestore...');
+    console.log('ðŸ“¡ Fetching reports from Firestore...');
     const snapshot = await db.collection('reports')
       .where('userId', '==', user.uid)
       .orderBy('updatedAt', 'desc')
@@ -94,10 +94,10 @@ export async function loadUserReports() {
       });
     });
     
-    console.log(`✅ Loaded ${reports.length} reports`);
+    console.log(`âœ… Loaded ${reports.length} reports`);
     return reports;
   } catch (error) {
-    console.error('❌ Error loading reports:', error);
+    console.error('âŒ Error loading reports:', error);
     console.error('Error details:', error.code, error.message);
     showNotification('Failed to load reports: ' + error.message, 'error');
     return [];
@@ -128,7 +128,7 @@ function migrateReportData(data) {
         });
         reading.extraDistanceCounter = 1;
         delete reading.extraDistance; // Remove old field
-        console.log('✅ Migrated extraDistance:', reading.extraDistance, '→', reading.extraDistances);
+        console.log('âœ… Migrated extraDistance:', reading.extraDistance, 'â†’', reading.extraDistances);
       }
       
       return reading;
@@ -168,7 +168,7 @@ export async function loadReport(reportId) {
     // Migrate old data format to new format
     const migratedData = migrateReportData(data);
     
-    console.log('✅ Report loaded and migrated:', reportId);
+    console.log('âœ… Report loaded and migrated:', reportId);
     return {
       id: doc.id,
       ...migratedData
@@ -209,7 +209,7 @@ export async function deleteReport(reportId) {
     await db.collection('reports').doc(reportId).delete();
     
     showNotification('Report deleted');
-    console.log('✅ Report deleted:', reportId);
+    console.log('âœ… Report deleted:', reportId);
     
     return true;
   } catch (error) {
@@ -246,7 +246,7 @@ export async function updateReport(reportId, appState, projectName, stage) {
     await db.collection('reports').doc(reportId).update(reportData);
     
     showNotification('Report updated successfully!');
-    console.log('✅ Report updated:', reportId);
+    console.log('âœ… Report updated:', reportId);
     
     return true;
   } catch (error) {
@@ -298,7 +298,7 @@ export function restoreReportToApp(reportData, appState) {
     // Trigger re-render of all tools
     // This will be called by the UI module
     
-    console.log('✅ Report restored to app');
+    console.log('âœ… Report restored to app');
     showNotification('Report loaded successfully!');
     
     return true;

@@ -31,7 +31,7 @@ export function initCalculator() {
         }
     }
     
-    console.log('✅ Calculator initialized');
+    console.log('âœ… Calculator initialized');
 }
 
 /**
@@ -59,7 +59,7 @@ export function calcInput(value) {
 }
 
 /**
- * Handle operation (+, -, ×, ÷)
+ * Handle operation (+, -, Ã—, Ã·)
  */
 export function calcOperation(op) {
     const current = parseFloat(calcState.display);
@@ -94,10 +94,10 @@ export function calcEquals() {
         case '-':
             result = prev - current;
             break;
-        case '×':
+        case 'Ã—':
             result = prev * current;
             break;
-        case '÷':
+        case 'Ã·':
             if (current === 0) {
                 showNotification('Cannot divide by zero', 'error');
                 calcClearAll();

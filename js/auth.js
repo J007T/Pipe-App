@@ -20,10 +20,10 @@ export function initAuth(firebaseAuth) {
     updateAuthUI(user);
     
     if (user) {
-      console.log('✅ User logged in:', user.email);
+      console.log('âœ… User logged in:', user.email);
       showNotification(`Welcome back, ${user.email}!`);
     } else {
-      console.log('👤 No user logged in');
+      console.log('ðŸ‘¤ No user logged in');
     }
   });
 }

@@ -3,7 +3,7 @@
  * Documents field observations and conditions
  */
 
-import { appState } from '../state.js';
+import { appState, autoSaveState } from '../state.js';
 import { showNotification } from '../ui.js';
 import { updateUnifiedPreview } from '../message-generator.js';
 
@@ -21,6 +21,7 @@ export function addGeneralNote() {
     renderGeneralNotes();
     updateUnifiedPreview();
     showNotification('Note added');
+    autoSaveState();
 }
 
 /**
@@ -37,6 +38,7 @@ export function deleteGeneralNote(id) {
     appState.manualPreviewEdit = false;
     updateUnifiedPreview();
     showNotification('Note deleted');
+    autoSaveState();
 }
 
 /**
@@ -50,6 +52,7 @@ export function moveGeneralNoteUp(index) {
     appState.manualPreviewEdit = false;
     updateUnifiedPreview();
     showNotification('Note moved up');
+    autoSaveState();
 }
 
 /**
@@ -63,6 +66,7 @@ export function moveGeneralNoteDown(index) {
     appState.manualPreviewEdit = false;
     updateUnifiedPreview();
     showNotification('Note moved down');
+    autoSaveState();
 }
 
 /**
@@ -76,6 +80,7 @@ export function updateGeneralNote(index, content) {
     renderGeneralNotes();
     appState.manualPreviewEdit = false;
     updateUnifiedPreview();
+    autoSaveState();
 }
 
 /**
@@ -97,7 +102,7 @@ export function renderGeneralNotes() {
                 <div class="reading-card-header" onclick="window.toggleReadingCard('generalNote-${note.id}')">
                     <div class="reading-number">
                         <i class="fas fa-sticky-note"></i>
-                        Note ${index + 1}${hasContent ? ' • ' + (note.content.length > 20 ? note.content.substring(0, 20) + '...' : note.content) : ''}
+                        Note ${index + 1}${hasContent ? ' â€¢ ' + (note.content.length > 20 ? note.content.substring(0, 20) + '...' : note.content) : ''}
                     </div>
                     <div class="reading-controls">
                         <button class="control-btn" onclick="event.stopPropagation(); window.moveGeneralNoteUp(${index})" ${index === 0 ? 'disabled' : ''} title="Move Up">
@@ -127,7 +132,7 @@ export function renderGeneralNotes() {
                         ${hasContent ? `
                             <div class="result-display">
                                 <div class="result-label">Preview</div>
-                                <div class="result-detail">${note.content.replace(/\n/g, '<br>')}</div>
+                                <div class="result-detail">${sanitizeNoteContent(note.content)}</div>
                             </div>
                         ` : ''}
                     </div>
@@ -154,4 +159,20 @@ export function clearGeneralNotesData() {
     addGeneralNote(); // Add one empty note back
     updateUnifiedPreview();
     showNotification('All notes cleared');
+    autoSaveState();
+}
+
+/**
+ * Sanitize note content to prevent XSS
+ */
+function sanitizeNoteContent(text) {
+    if (!text) return '';
+    return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#x27;')
+        .replace(/\//g, '&#x2F;')
+        .replace(/\n/g, '<br>');
 }

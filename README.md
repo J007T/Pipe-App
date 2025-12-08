@@ -2,11 +2,11 @@
 
 **Professional construction QC calculator for sewer and water pipeline projects**
 
-## 🎯 What It Does
+## ðŸŽ¯ What It Does
 
 Field engineers use this mobile web app to:
 - Calculate pipe level deviations (HIGH/LOW)
-- Convert laser grades (ratio ↔ percentage)
+- Convert laser grades (ratio â†” percentage)
 - Calculate regrade requirements
 - Verify grade compliance
 - Calculate invert levels at any chainage
@@ -14,7 +14,7 @@ Field engineers use this mobile web app to:
 
 All tools generate standardized, client-ready text reports that can be immediately sent via SMS/WhatsApp/email.
 
-## ✨ Features
+## âœ¨ Features
 
 - **6 Specialized Tools**: Each designed for specific QC calculations
 - **Unified Reporting**: All tools feed into one comprehensive field report
@@ -24,7 +24,7 @@ All tools generate standardized, client-ready text reports that can be immediate
 - **High Precision**: Maintains surveying-grade calculation accuracy
 - **Professional Output**: Industry-standard formatting
 
-## 🚀 Quick Start
+## ðŸš€ Quick Start
 
 ### For Users
 1. Open https://[your-username].github.io/purposemobile-field-tools
@@ -44,39 +44,39 @@ python -m http.server 8000
 # Navigate to http://localhost:8000
 ```
 
-## 📁 Project Structure
+## ðŸ“ Project Structure
 
 ```
 purposemobile-field-tools/
-├── index.html                    # Main HTML shell
-├── css/
-│   ├── variables.css            # Design tokens & themes
-│   ├── base.css                 # Foundation styles
-│   └── components.css           # UI components
-└── js/
-    ├── app.js                   # Application initialization
-    ├── state.js                 # State management
-    ├── ui.js                    # UI utilities
-    ├── message-generator.js     # Report generation
-    └── tools/
-        ├── pipe-level-check.js  # Pipe level verification
-        ├── laser-converter.js   # Grade conversions
-        ├── regrade.js           # Regrade calculations
-        ├── grade-check.js       # Grade verification
-        ├── chainage-il.js       # Chainage calculations
-        └── general-notes.js     # Field notes
+â”œâ”€â”€ index.html                    # Main HTML shell
+â”œâ”€â”€ css/
+â”‚   â”œâ”€â”€ variables.css            # Design tokens & themes
+â”‚   â”œâ”€â”€ base.css                 # Foundation styles
+â”‚   â””â”€â”€ components.css           # UI components
+â””â”€â”€ js/
+    â”œâ”€â”€ app.js                   # Application initialization
+    â”œâ”€â”€ state.js                 # State management
+    â”œâ”€â”€ ui.js                    # UI utilities
+    â”œâ”€â”€ message-generator.js     # Report generation
+    â””â”€â”€ tools/
+        â”œâ”€â”€ pipe-level-check.js  # Pipe level verification
+        â”œâ”€â”€ laser-converter.js   # Grade conversions
+        â”œâ”€â”€ regrade.js           # Regrade calculations
+        â”œâ”€â”€ grade-check.js       # Grade verification
+        â”œâ”€â”€ chainage-il.js       # Chainage calculations
+        â””â”€â”€ general-notes.js     # Field notes
 ```
 
-## 🛠️ Development
+## ðŸ› ï¸ Development
 
 ### Current Status
 
 **Refactoring Progress: 50%**
-- ✅ CSS fully modularized (3/3 files)
-- ✅ Core JavaScript (4/4 files)
-- ✅ One tool complete (pipe-level-check.js)
-- ⏳ 5 tools remaining
-- ⏳ Integration pending
+- âœ… CSS fully modularized (3/3 files)
+- âœ… Core JavaScript (4/4 files)
+- âœ… One tool complete (pipe-level-check.js)
+- â³ 5 tools remaining
+- â³ Integration pending
 
 See [REFACTORING.md](REFACTORING.md) for detailed progress.
 
@@ -92,7 +92,7 @@ See [REFACTORING.md](REFACTORING.md) for detailed progress.
 - **Modularity**: Each tool is independent
 - **Accessibility**: WCAG AA compliant
 
-## 📱 The Six Tools
+## ðŸ“± The Six Tools
 
 ### 1. Pipe Level Check
 Verifies installed pipe levels against design specifications.
@@ -130,7 +130,7 @@ Documents field observations and issues.
 - Integrated into unified report
 - Supports multiple note sections
 
-## 📋 Message Format Standard
+## ðŸ“‹ Message Format Standard
 
 All tools generate reports following this strict format:
 
@@ -154,30 +154,30 @@ HIGH - 0.045
 - Periods after value lines
 - ALL CAPS field labels
 
-## 🔬 Testing
+## ðŸ”¬ Testing
 
 ### Calculation Verification
 Each tool has been tested against known values:
-- Pipe Level: ±0.001m accuracy
-- Laser: ±0.0001% precision
+- Pipe Level: Â±0.001m accuracy
+- Laser: Â±0.0001% precision
 - Regrade: Verified against manual calculations
 - Grade Check: Cross-referenced with design documents
 - Chainage IL: Tested with surveyed points
 
 ### Browser Compatibility
-- ✅ Chrome 90+
-- ✅ Firefox 88+
-- ✅ Safari 14+
-- ✅ Edge 90+
-- ✅ Mobile Safari (iOS 14+)
-- ✅ Chrome Mobile (Android 10+)
+- âœ… Chrome 90+
+- âœ… Firefox 88+
+- âœ… Safari 14+
+- âœ… Edge 90+
+- âœ… Mobile Safari (iOS 14+)
+- âœ… Chrome Mobile (Android 10+)
 
-## 🚢 Deployment
+## ðŸš¢ Deployment
 
 ### GitHub Pages (Recommended)
 ```bash
 git push origin main
-# Enable in Settings → Pages → Source: main branch
+# Enable in Settings â†’ Pages â†’ Source: main branch
 # Site live at: https://[username].github.io/[repo]
 ```
 
@@ -189,7 +189,7 @@ git push origin main
 ### Self-Hosted
 Upload all files to any web server. No build process required.
 
-## 🤝 Contributing
+## ðŸ¤ Contributing
 
 ### Found a Bug?
 1. Check [Issues](https://github.com/[username]/[repo]/issues)
@@ -212,22 +212,22 @@ Upload all files to any web server. No build process required.
 - Follow existing naming conventions
 - Test thoroughly before PR
 
-## 📄 License
+## ðŸ“„ License
 
 MIT License - See [LICENSE](LICENSE) file
 
-## 👥 Credits
+## ðŸ‘¥ Credits
 
 **Original Developer**: [Your Name]
 **Purpose**: Construction quality control for pipeline installation
 
-## 📞 Support
+## ðŸ“ž Support
 
 - **Issues**: [GitHub Issues](https://github.com/[username]/[repo]/issues)
 - **Documentation**: See [REFACTORING.md](REFACTORING.md)
 - **Email**: [your-email]
 
-## 🗺️ Roadmap
+## ðŸ—ºï¸ Roadmap
 
 ### v2.0 (Planned)
 - [ ] Data persistence (localStorage)
@@ -244,4 +244,4 @@ MIT License - See [LICENSE](LICENSE) file
 
 ---
 
-**Built for field engineers, by field engineers** 🏗️
+**Built for field engineers, by field engineers** ðŸ—ï¸

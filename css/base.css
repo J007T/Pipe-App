@@ -159,3 +159,22 @@ label {
         font-size: 14px;
     }
 }
+
+/* Mobile touch optimizations */
+@media screen and (max-width: 768px) {
+    input[type="number"],
+    input[type="text"],
+    select,
+    textarea {
+        font-size: 16px !important; /* Prevents iOS zoom */
+    }
+    
+    .btn {
+        min-height: 44px; /* Minimum touch target size */
+    }
+    
+    .control-btn {
+        min-width: 44px;
+        min-height: 44px;
+    }
+}

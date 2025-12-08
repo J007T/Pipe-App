@@ -3,7 +3,7 @@
  * Calculates required grade changes between points
  */
 
-import { appState } from '../state.js';
+import { appState, autoSaveState } from '../state.js';
 import { showNotification, formatRatio } from '../ui.js';
 import { updateUnifiedPreview } from '../message-generator.js';
 
@@ -37,6 +37,7 @@ export function addRegradeReading() {
     appState.regrade.readings.push(reading);
     renderRegradeReadings();
     showNotification('Regrade calculation added');
+    autoSaveState();
 }
 
 /**
@@ -53,6 +54,7 @@ export function deleteRegradeReading(index) {
     appState.manualPreviewEdit = false;
     updateUnifiedPreview();
     showNotification('Calculation deleted');
+    autoSaveState();
 }
 
 /**
@@ -66,6 +68,7 @@ export function moveRegradeReadingUp(index) {
     appState.manualPreviewEdit = false;
     updateUnifiedPreview();
     showNotification('Calculation moved up');
+    autoSaveState();
 }
 
 /**
@@ -79,6 +82,7 @@ export function moveRegradeReadingDown(index) {
     appState.manualPreviewEdit = false;
     updateUnifiedPreview();
     showNotification('Calculation moved down');
+    autoSaveState();
 }
 
 /**
@@ -89,6 +93,7 @@ export function updateRegradeReading(index, field, value) {
         appState.regrade.readings[index][field] = value;
         appState.manualPreviewEdit = false;
         updateUnifiedPreview();
+        autoSaveState();
     }
 }
 
@@ -101,6 +106,7 @@ export function toggleRegradeReadingGradeMode(index, mode) {
         renderRegradeReadings();
         appState.manualPreviewEdit = false;
         updateUnifiedPreview();
+        autoSaveState();
     }
 }
 
@@ -174,6 +180,7 @@ export function calculateRegradeReading(index) {
         renderRegradeReadings();
         updateUnifiedPreview();
         showNotification('Regrade calculation completed');
+        autoSaveState();
     }, 300);
 }
 
@@ -295,4 +302,5 @@ export function clearRegradeToolData() {
     addRegradeReading(); // Add one empty reading back
     updateUnifiedPreview();
     showNotification('Regrade data cleared');
+    autoSaveState();
 }

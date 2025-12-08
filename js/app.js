@@ -4,7 +4,7 @@
  */
 
 // Import state management
-import { appState, resetAllState, resetToolState } from './state.js';
+import { appState, resetAllState, resetToolState, loadSavedState } from './state.js';
 
 // Import UI utilities
 import { 
@@ -99,7 +99,7 @@ function exposeToWindow() {
     window.moveChainageILReadingDown = ChainageIL.moveChainageILReadingDown;
     window.updateChainageILReading = ChainageIL.updateChainageILReading;
     window.toggleChainageILGradeMode = ChainageIL.toggleChainageILGradeMode;
-    window.clearChainageILToolData = ChainageIL.clearChainageILToolData;
+    window.clearChainageILData = ChainageIL.clearChainageILData;
     
     // General Notes
     window.addGeneralNote = GeneralNotes.addGeneralNote;
@@ -190,6 +190,47 @@ function initializeEventListeners() {
             btn.addEventListener('click', handler);
         }
     });
+    
+    // Event delegation for all radio button groups
+    document.addEventListener('change', function(e) {
+        const target = e.target;
+        
+        // Handle chainage mode changes
+        if (target.matches('input[name^="chainageMode-"]')) {
+            const id = parseInt(target.name.split('-')[1]);
+            const index = appState.chainageIL.readings.findIndex(r => r.id === id);
+            if (index !== -1) {
+                ChainageIL.toggleChainageILGradeMode(index, target.value);
+            }
+        }
+        
+        // Handle pipe level slope mode changes
+        if (target.matches('input[name^="slopeMode-"]')) {
+            const id = parseInt(target.name.split('-')[1]);
+            const index = appState.pipeLevelCheck.readings.findIndex(r => r.id === id);
+            if (index !== -1) {
+                PipeLevelCheck.togglePipeLevelCheckSlopeMode(index, target.value);
+            }
+        }
+        
+        // Handle regrade mode changes
+        if (target.matches('input[name^="regradeMode-"]')) {
+            const id = parseInt(target.name.split('-')[1]);
+            const index = appState.regrade.readings.findIndex(r => r.id === id);
+            if (index !== -1) {
+                Regrade.toggleRegradeReadingGradeMode(index, target.value);
+            }
+        }
+        
+        // Handle grade check mode changes
+        if (target.matches('input[name^="gradeCheckMode-"]')) {
+            const id = parseInt(target.name.split('-')[1]);
+            const index = appState.gradeCheck.readings.findIndex(r => r.id === id);
+            if (index !== -1) {
+                GradeCheck.toggleGradeCheckGradeMode(id, target.value);
+            }
+        }
+    });
 }
 
 /**
@@ -205,11 +246,36 @@ function initializeTools() {
 }
 
 /**
+ * Render all tools (used when restoring from localStorage)
+ */
+function renderAllTools() {
+    PipeLevelCheck.renderPipeLevelCheckReadings();
+    LaserConverter.renderLaserReadings();
+    Regrade.renderRegradeReadings();
+    GradeCheck.renderGradeCheckReadings();
+    ChainageIL.renderChainageILReadings();
+    GeneralNotes.renderGeneralNotes();
+}
+
+/**
  * Main application initialization
  */
 function initializeApp() {
     // Load saved theme
     loadTheme();
+    
+    // Try to load saved work-in-progress
+    const hasSavedState = loadSavedState();
+    
+    // Initialize tools only if no saved state
+    if (!hasSavedState) {
+        console.log('Starting fresh - no saved work found');
+        initializeTools();
+    } else {
+        console.log('Restored work-in-progress from localStorage');
+        // Render all tools to update UI with loaded state
+        renderAllTools();
+    }
     
     // Expose functions to window for onclick handlers
     exposeToWindow();
@@ -223,18 +289,19 @@ function initializeApp() {
     // Initialize calculator
     initCalculator();
     
-    // Initialize each tool with one reading
-    initializeTools();
-    
     // Update unified preview
     updateUnifiedPreview();
     
     console.log('✅ PurposeMobile Field Tools - Ready!');
     console.log('📊 All 6 tools initialized');
-    console.log('📁 Saved Reports module loaded');
-    console.log('🔢 Calculator ready');
-    console.log('🎨 Theme system active');
-    console.log('📱 Mobile-optimized interface loaded');
+    console.log('💾 Auto-save: ACTIVE (localStorage + Firebase)');
+    
+    console.log('âœ… PurposeMobile Field Tools - Ready!');
+    console.log('ðŸ“Š All 6 tools initialized');
+    console.log('ðŸ“ Saved Reports module loaded');
+    console.log('ðŸ”¢ Calculator ready');
+    console.log('ðŸŽ¨ Theme system active');
+    console.log('ðŸ“± Mobile-optimized interface loaded');
 }
 
 /**
