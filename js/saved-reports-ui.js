@@ -201,7 +201,7 @@ function createReportCard(report) {
         toolCounts.push(`${report.generalNotes.notes.length} Notes`);
     }
     
-    const toolSummary = toolCounts.length > 0 ? toolCounts.join(' â€¢ ') : 'Empty report';
+    const toolSummary = toolCounts.length > 0 ? toolCounts.join(' • ') : 'Empty report';
     
     return `
         <div class="report-card" style="background: var(--bg-card); border: 2px solid var(--border); border-radius: 12px; margin-bottom: 16px; overflow: hidden; box-shadow: var(--shadow-light); transition: var(--transition);">

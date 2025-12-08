@@ -36,6 +36,10 @@ import { initSavedReports, refreshSavedReports } from './saved-reports-ui.js';
 // Import calculator
 import { initCalculator } from './calculator.js';
 
+// Import Firebase modules
+import { initAuth } from './auth.js';
+import { initDatabase } from './database.js';
+
 /**
  * Expose functions to global window object
  * Required for inline onclick handlers in HTML
@@ -261,6 +265,15 @@ function renderAllTools() {
  * Main application initialization
  */
 function initializeApp() {
+    // Initialize Firebase modules if available
+    if (window._firebaseAuth && window._firebaseDb) {
+        initAuth(window._firebaseAuth);
+        initDatabase(window._firebaseDb);
+        console.log('✅ Firebase modules initialized');
+    } else {
+        console.warn('⚠️ Firebase not available - saved reports disabled');
+    }
+    
     // Load saved theme
     loadTheme();
     

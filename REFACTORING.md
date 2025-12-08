@@ -4,12 +4,12 @@
 This document outlines the complete refactoring of the single-file PurposeMobile application into a modular, maintainable codebase.
 
 ## Objectives
-1. ✅ Separate concerns (CSS, JS, HTML)
-2. ✅ Create reusable modules for each tool
-3. ✅ Maintain ALL existing functionality
-4. ✅ Preserve calculation precision standards
-5. ✅ Keep message format compliance
-6. ✅ Enable easier testing and maintenance
+1. âœ… Separate concerns (CSS, JS, HTML)
+2. âœ… Create reusable modules for each tool
+3. âœ… Maintain ALL existing functionality
+4. âœ… Preserve calculation precision standards
+5. âœ… Keep message format compliance
+6. âœ… Enable easier testing and maintenance
 
 ---
 
@@ -17,38 +17,38 @@ This document outlines the complete refactoring of the single-file PurposeMobile
 
 ```
 purposemobile-field-tools/
-├── index.html                          [NEW - Clean HTML shell]
-├── README.md                           [NEW - User documentation]
-├── REFACTORING.md                      [THIS FILE]
-│
-├── css/
-│   ├── variables.css                   [DONE - Design tokens & theme]
-│   ├── base.css                        [DONE - Resets & typography]
-│   ├── components.css                  [DONE - UI components]
-│   └── themes.css                      [Optional - Additional themes]
-│
-└── js/
-    ├── app.js                          [TODO - Main initialization]
-    ├── state.js                        [DONE - Centralized state]
-    ├── ui.js                           [DONE - UI utilities]
-    ├── message-generator.js            [DONE - Unified reports]
-    │
-    └── tools/
-        ├── pipe-level-check.js         [DONE - Pipe level tool]
-        ├── laser-converter.js          [TODO - Laser tool]
-        ├── regrade.js                  [TODO - Regrade tool]
-        ├── grade-check.js              [TODO - Grade check tool]
-        ├── chainage-il.js              [TODO - Chainage tool]
-        └── general-notes.js            [TODO - Notes tool]
+â”œâ”€â”€ index.html                          [NEW - Clean HTML shell]
+â”œâ”€â”€ README.md                           [NEW - User documentation]
+â”œâ”€â”€ REFACTORING.md                      [THIS FILE]
+â”‚
+â”œâ”€â”€ css/
+â”‚   â”œâ”€â”€ variables.css                   [DONE - Design tokens & theme]
+â”‚   â”œâ”€â”€ base.css                        [DONE - Resets & typography]
+â”‚   â”œâ”€â”€ components.css                  [DONE - UI components]
+â”‚   â””â”€â”€ themes.css                      [Optional - Additional themes]
+â”‚
+â””â”€â”€ js/
+    â”œâ”€â”€ app.js                          [TODO - Main initialization]
+    â”œâ”€â”€ state.js                        [DONE - Centralized state]
+    â”œâ”€â”€ ui.js                           [DONE - UI utilities]
+    â”œâ”€â”€ message-generator.js            [DONE - Unified reports]
+    â”‚
+    â””â”€â”€ tools/
+        â”œâ”€â”€ pipe-level-check.js         [DONE - Pipe level tool]
+        â”œâ”€â”€ laser-converter.js          [TODO - Laser tool]
+        â”œâ”€â”€ regrade.js                  [TODO - Regrade tool]
+        â”œâ”€â”€ grade-check.js              [TODO - Grade check tool]
+        â”œâ”€â”€ chainage-il.js              [TODO - Chainage tool]
+        â””â”€â”€ general-notes.js            [TODO - Notes tool]
 ```
 
 ---
 
 ## Completed Files
 
-### CSS Files (3/3) ✅
+### CSS Files (3/3) âœ…
 
-#### 1. `css/variables.css` ✅
+#### 1. `css/variables.css` âœ…
 - **Purpose**: Design tokens for theming
 - **Content**:
   - Color palette (primary, secondary, status colors)
@@ -58,7 +58,7 @@ purposemobile-field-tools/
 - **Lines**: ~150
 - **Dependencies**: None
 
-#### 2. `css/base.css` ✅
+#### 2. `css/base.css` âœ…
 - **Purpose**: Foundation styles
 - **Content**:
   - CSS reset
@@ -69,7 +69,7 @@ purposemobile-field-tools/
 - **Lines**: ~120
 - **Dependencies**: variables.css
 
-#### 3. `css/components.css` ✅
+#### 3. `css/components.css` âœ…
 - **Purpose**: Reusable UI components
 - **Content**:
   - Header components
@@ -87,9 +87,9 @@ purposemobile-field-tools/
 - **Lines**: ~650
 - **Dependencies**: variables.css, base.css
 
-### JavaScript Files (4/10) ✅
+### JavaScript Files (4/10) âœ…
 
-#### 4. `js/state.js` ✅
+#### 4. `js/state.js` âœ…
 - **Purpose**: Centralized application state
 - **Content**:
   - appState object (all tool data)
@@ -102,7 +102,7 @@ purposemobile-field-tools/
   - `resetAllState()`
   - `resetToolState(toolName)`
 
-#### 5. `js/ui.js` ✅
+#### 5. `js/ui.js` âœ…
 - **Purpose**: UI utilities and helpers
 - **Content**:
   - Theme management (load/toggle)
@@ -125,7 +125,7 @@ purposemobile-field-tools/
   - `copyUnifiedMessage()`
   - `formatRatio(value)`
 
-#### 6. `js/message-generator.js` ✅
+#### 6. `js/message-generator.js` âœ…
 - **Purpose**: Generate standardized field reports
 - **Content**:
   - Main generator function
@@ -137,7 +137,7 @@ purposemobile-field-tools/
   - `updateUnifiedPreview()`
 - **Critical**: Follows strict format standard
 
-#### 7. `js/tools/pipe-level-check.js` ✅
+#### 7. `js/tools/pipe-level-check.js` âœ…
 - **Purpose**: Pipe Level Check tool logic
 - **Content**:
   - CRUD operations (add, delete, move)
@@ -288,13 +288,13 @@ purposemobile-field-tools/
 
 ## Migration Strategy
 
-### Phase 1: Foundation ✅ COMPLETE
+### Phase 1: Foundation âœ… COMPLETE
 - [x] Create CSS files (variables, base, components)
 - [x] Create state.js
 - [x] Create ui.js
 - [x] Create message-generator.js
 
-### Phase 2: First Tool ✅ COMPLETE
+### Phase 2: First Tool âœ… COMPLETE
 - [x] Create pipe-level-check.js (proof of concept)
 - [x] Verify all functions work
 
@@ -331,29 +331,29 @@ purposemobile-field-tools/
 ## Critical Preservation Requirements
 
 ### Calculations
-- ✅ Full precision maintained until final display
-- ✅ Chainages: 2 decimals
-- ✅ Levels: 3 decimals
-- ✅ Laser percentages: 4 decimals
-- ✅ No intermediate rounding
+- âœ… Full precision maintained until final display
+- âœ… Chainages: 2 decimals
+- âœ… Levels: 3 decimals
+- âœ… Laser percentages: 4 decimals
+- âœ… No intermediate rounding
 
 ### Message Format
-- ✅ Plain text only
-- ✅ ALL CAPS field labels
-- ✅ Period after each value line
-- ✅ ONE blank line between sections
-- ✅ Section ID format preserved
-- ✅ Status format: "STATUS - value"
+- âœ… Plain text only
+- âœ… ALL CAPS field labels
+- âœ… Period after each value line
+- âœ… ONE blank line between sections
+- âœ… Section ID format preserved
+- âœ… Status format: "STATUS - value"
 
 ### Functionality
-- ✅ All tools work independently
-- ✅ Unified message aggregation
-- ✅ Reading reordering (up/down)
-- ✅ Individual reading deletion
-- ✅ Tool data clearing
-- ✅ Manual preview editing
-- ✅ Theme persistence
-- ✅ Collapsible sections
+- âœ… All tools work independently
+- âœ… Unified message aggregation
+- âœ… Reading reordering (up/down)
+- âœ… Individual reading deletion
+- âœ… Tool data clearing
+- âœ… Manual preview editing
+- âœ… Theme persistence
+- âœ… Collapsible sections
 
 ---
 
@@ -501,10 +501,10 @@ git push origin main
 ### Branching Strategy
 ```
 main (production)
-├── develop (integration)
-│   ├── feature/tool-name
-│   ├── bugfix/issue-description
-│   └── refactor/improvement
+â”œâ”€â”€ develop (integration)
+â”‚   â”œâ”€â”€ feature/tool-name
+â”‚   â”œâ”€â”€ bugfix/issue-description
+â”‚   â””â”€â”€ refactor/improvement
 ```
 
 ---
@@ -513,23 +513,23 @@ main (production)
 
 ```
 index.html
-    ↓ (imports)
-    ├── css/variables.css
-    ├── css/base.css
-    └── css/components.css
-    ↓ (imports)
+    â†“ (imports)
+    â”œâ”€â”€ css/variables.css
+    â”œâ”€â”€ css/base.css
+    â””â”€â”€ css/components.css
+    â†“ (imports)
     app.js (type="module")
-        ↓ (imports)
-        ├── state.js
-        ├── ui.js → state.js, message-generator.js
-        ├── message-generator.js → state.js, ui.js
-        └── tools/
-            ├── pipe-level-check.js → state.js, ui.js, message-generator.js
-            ├── laser-converter.js → state.js, ui.js, message-generator.js
-            ├── regrade.js → state.js, ui.js, message-generator.js
-            ├── grade-check.js → state.js, ui.js, message-generator.js
-            ├── chainage-il.js → state.js, ui.js, message-generator.js
-            └── general-notes.js → state.js, ui.js, message-generator.js
+        â†“ (imports)
+        â”œâ”€â”€ state.js
+        â”œâ”€â”€ ui.js â†’ state.js, message-generator.js
+        â”œâ”€â”€ message-generator.js â†’ state.js, ui.js
+        â””â”€â”€ tools/
+            â”œâ”€â”€ pipe-level-check.js â†’ state.js, ui.js, message-generator.js
+            â”œâ”€â”€ laser-converter.js â†’ state.js, ui.js, message-generator.js
+            â”œâ”€â”€ regrade.js â†’ state.js, ui.js, message-generator.js
+            â”œâ”€â”€ grade-check.js â†’ state.js, ui.js, message-generator.js
+            â”œâ”€â”€ chainage-il.js â†’ state.js, ui.js, message-generator.js
+            â””â”€â”€ general-notes.js â†’ state.js, ui.js, message-generator.js
 ```
 
 ---
@@ -537,14 +537,14 @@ index.html
 ## Success Criteria
 
 The refactoring is complete when:
-- ✅ All 6 tools work identically to original
-- ✅ All calculations produce same results
-- ✅ Message format matches standard exactly
-- ✅ Theme switching works
-- ✅ No console errors
-- ✅ Mobile responsive
-- ✅ Code is organized and documented
-- ✅ README is complete
+- âœ… All 6 tools work identically to original
+- âœ… All calculations produce same results
+- âœ… Message format matches standard exactly
+- âœ… Theme switching works
+- âœ… No console errors
+- âœ… Mobile responsive
+- âœ… Code is organized and documented
+- âœ… README is complete
 
 ---
 
@@ -569,11 +569,11 @@ The refactoring is complete when:
 
 **Overall Progress: 50%**
 
-- CSS: 100% (3/3 files) ✅
-- Core JS: 75% (3/4 files) ✅
-- Tools: 17% (1/6 files) ✅
-- Integration: 0% (0/2 files) ⏳
-- Documentation: 50% (1/2 files) ✅
+- CSS: 100% (3/3 files) âœ…
+- Core JS: 75% (3/4 files) âœ…
+- Tools: 17% (1/6 files) âœ…
+- Integration: 0% (0/2 files) â³
+- Documentation: 50% (1/2 files) âœ…
 
 **Next Steps:**
 1. Create remaining 5 tool modules

@@ -102,7 +102,7 @@ export function renderGeneralNotes() {
                 <div class="reading-card-header" onclick="window.toggleReadingCard('generalNote-${note.id}')">
                     <div class="reading-number">
                         <i class="fas fa-sticky-note"></i>
-                        Note ${index + 1}${hasContent ? ' â€¢ ' + (note.content.length > 20 ? note.content.substring(0, 20) + '...' : note.content) : ''}
+                        Note ${index + 1}${hasContent ? ' • ' + (note.content.length > 20 ? note.content.substring(0, 20) + '...' : note.content) : ''}
                     </div>
                     <div class="reading-controls">
                         <button class="control-btn" onclick="event.stopPropagation(); window.moveGeneralNoteUp(${index})" ${index === 0 ? 'disabled' : ''} title="Move Up">

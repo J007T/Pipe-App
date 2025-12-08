@@ -23,7 +23,7 @@
         <!-- Unified Header -->
         <header class="unified-header">
             <h1><i class="fas fa-calculator"></i> Field Tools</h1>
-            <p class="subtitle">Pipe Level Check â€¢ Laser â€¢ Regrade â€¢ Grade Check â€¢ Chainage IL â€¢ Notes</p>
+            <p class="subtitle">Pipe Level Check • Laser • Regrade • Grade Check • Chainage IL • Notes</p>
             
             <div class="header-controls">
                 <div class="project-info">
@@ -83,46 +83,6 @@
             </button>
         </nav>
 
-        <!-- Unified Report Message - Always Visible Above All Tabs -->
-        <div class="main-content">
-            <div class="section-header" onclick="toggleSection('unifiedPreviewSection', event)">
-                <i class="fas fa-file-alt"></i>
-                <span>Unified Report Message</span>
-                <i class="fas fa-chevron-down chevron"></i>
-            </div>
-            <div class="section-content" id="unifiedPreviewSection">
-                <div class="section-inner">
-                    <div class="preview-container">
-                        <div class="preview-label">
-                            <i class="fas fa-comment-dots"></i>
-                            Combined Field Report
-                        </div>
-                        <textarea 
-                            class="preview-textarea" 
-                            id="unifiedPreviewText" 
-                            placeholder="Enter project information and add calculations to generate report..."
-                            oninput="handleUnifiedPreviewEdit()"
-                        ></textarea>
-                        <div class="format-warning hidden" id="unifiedFormatWarning">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            Manual edits will be overwritten when calculations change
-                        </div>
-                    </div>
-                    
-                    <div class="action-buttons">
-                        <button class="btn btn-success" onclick="copyUnifiedMessage()">
-                            <i class="fas fa-copy"></i>
-                            Copy Report
-                        </button>
-                        <button class="btn btn-primary" onclick="saveCurrentReport()">
-                            <i class="fas fa-save"></i>
-                            Save Report
-                        </button>
-                        <button class="btn btn-danger" onclick="clearAllData()">
-                            <i class="fas fa-trash"></i>
-                            Clear All Data
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -149,6 +109,49 @@
                             <i class="fas fa-broom"></i>
                             Clear Pipe Level Data
                         </button>
+                    </div>
+                </div>
+
+
+                <!-- Unified Report Message -->
+                <div class="section-header" onclick="toggleSection('unifiedPreviewSection', event)">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Unified Report Message</span>
+                    <i class="fas fa-chevron-down chevron"></i>
+                </div>
+                <div class="section-content" id="unifiedPreviewSection">
+                    <div class="section-inner">
+                        <div class="preview-container">
+                            <div class="preview-label">
+                                <i class="fas fa-comment-dots"></i>
+                                Combined Field Report
+                            </div>
+                            <textarea 
+                                class="preview-textarea" 
+                                id="unifiedPreviewText" 
+                                placeholder="Enter project information and add calculations to generate report..."
+                                oninput="handleUnifiedPreviewEdit()"
+                            ></textarea>
+                            <div class="format-warning hidden" id="unifiedFormatWarning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                Manual edits will be overwritten when calculations change
+                            </div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button class="btn btn-success" onclick="copyUnifiedMessage()">
+                                <i class="fas fa-copy"></i>
+                                Copy Report
+                            </button>
+                            <button class="btn btn-primary" onclick="saveCurrentReport()">
+                                <i class="fas fa-save"></i>
+                                Save Report
+                            </button>
+                            <button class="btn btn-danger" onclick="clearAllData()">
+                                <i class="fas fa-trash"></i>
+                                Clear All Data
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -248,6 +251,49 @@
                             <i class="fas fa-broom"></i>
                             Clear Laser Data
                         </button>
+                    </div>
+                </div>
+
+
+                <!-- Unified Report Message -->
+                <div class="section-header" onclick="toggleSection('unifiedPreviewSection', event)">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Unified Report Message</span>
+                    <i class="fas fa-chevron-down chevron"></i>
+                </div>
+                <div class="section-content" id="unifiedPreviewSection">
+                    <div class="section-inner">
+                        <div class="preview-container">
+                            <div class="preview-label">
+                                <i class="fas fa-comment-dots"></i>
+                                Combined Field Report
+                            </div>
+                            <textarea 
+                                class="preview-textarea" 
+                                id="unifiedPreviewText" 
+                                placeholder="Enter project information and add calculations to generate report..."
+                                oninput="handleUnifiedPreviewEdit()"
+                            ></textarea>
+                            <div class="format-warning hidden" id="unifiedFormatWarning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                Manual edits will be overwritten when calculations change
+                            </div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button class="btn btn-success" onclick="copyUnifiedMessage()">
+                                <i class="fas fa-copy"></i>
+                                Copy Report
+                            </button>
+                            <button class="btn btn-primary" onclick="saveCurrentReport()">
+                                <i class="fas fa-save"></i>
+                                Save Report
+                            </button>
+                            <button class="btn btn-danger" onclick="clearAllData()">
+                                <i class="fas fa-trash"></i>
+                                Clear All Data
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -353,6 +399,49 @@
                     </div>
                 </div>
 
+
+                <!-- Unified Report Message -->
+                <div class="section-header" onclick="toggleSection('unifiedPreviewSection', event)">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Unified Report Message</span>
+                    <i class="fas fa-chevron-down chevron"></i>
+                </div>
+                <div class="section-content" id="unifiedPreviewSection">
+                    <div class="section-inner">
+                        <div class="preview-container">
+                            <div class="preview-label">
+                                <i class="fas fa-comment-dots"></i>
+                                Combined Field Report
+                            </div>
+                            <textarea 
+                                class="preview-textarea" 
+                                id="unifiedPreviewText" 
+                                placeholder="Enter project information and add calculations to generate report..."
+                                oninput="handleUnifiedPreviewEdit()"
+                            ></textarea>
+                            <div class="format-warning hidden" id="unifiedFormatWarning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                Manual edits will be overwritten when calculations change
+                            </div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button class="btn btn-success" onclick="copyUnifiedMessage()">
+                                <i class="fas fa-copy"></i>
+                                Copy Report
+                            </button>
+                            <button class="btn btn-primary" onclick="saveCurrentReport()">
+                                <i class="fas fa-save"></i>
+                                Save Report
+                            </button>
+                            <button class="btn btn-danger" onclick="clearAllData()">
+                                <i class="fas fa-trash"></i>
+                                Clear All Data
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Quick Guide Grade Table -->
                 <div class="reference-section">
                     <div class="reference-header collapsed" onclick="toggleReferenceTable('regradeGradeTable', event)">
@@ -449,6 +538,49 @@
                             <i class="fas fa-broom"></i>
                             Clear Grade Check Data
                         </button>
+                    </div>
+                </div>
+
+
+                <!-- Unified Report Message -->
+                <div class="section-header" onclick="toggleSection('unifiedPreviewSection', event)">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Unified Report Message</span>
+                    <i class="fas fa-chevron-down chevron"></i>
+                </div>
+                <div class="section-content" id="unifiedPreviewSection">
+                    <div class="section-inner">
+                        <div class="preview-container">
+                            <div class="preview-label">
+                                <i class="fas fa-comment-dots"></i>
+                                Combined Field Report
+                            </div>
+                            <textarea 
+                                class="preview-textarea" 
+                                id="unifiedPreviewText" 
+                                placeholder="Enter project information and add calculations to generate report..."
+                                oninput="handleUnifiedPreviewEdit()"
+                            ></textarea>
+                            <div class="format-warning hidden" id="unifiedFormatWarning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                Manual edits will be overwritten when calculations change
+                            </div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button class="btn btn-success" onclick="copyUnifiedMessage()">
+                                <i class="fas fa-copy"></i>
+                                Copy Report
+                            </button>
+                            <button class="btn btn-primary" onclick="saveCurrentReport()">
+                                <i class="fas fa-save"></i>
+                                Save Report
+                            </button>
+                            <button class="btn btn-danger" onclick="clearAllData()">
+                                <i class="fas fa-trash"></i>
+                                Clear All Data
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -550,6 +682,49 @@
                             <i class="fas fa-broom"></i>
                             Clear Chainage Data
                         </button>
+                    </div>
+                </div>
+
+
+                <!-- Unified Report Message -->
+                <div class="section-header" onclick="toggleSection('unifiedPreviewSection', event)">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Unified Report Message</span>
+                    <i class="fas fa-chevron-down chevron"></i>
+                </div>
+                <div class="section-content" id="unifiedPreviewSection">
+                    <div class="section-inner">
+                        <div class="preview-container">
+                            <div class="preview-label">
+                                <i class="fas fa-comment-dots"></i>
+                                Combined Field Report
+                            </div>
+                            <textarea 
+                                class="preview-textarea" 
+                                id="unifiedPreviewText" 
+                                placeholder="Enter project information and add calculations to generate report..."
+                                oninput="handleUnifiedPreviewEdit()"
+                            ></textarea>
+                            <div class="format-warning hidden" id="unifiedFormatWarning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                Manual edits will be overwritten when calculations change
+                            </div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button class="btn btn-success" onclick="copyUnifiedMessage()">
+                                <i class="fas fa-copy"></i>
+                                Copy Report
+                            </button>
+                            <button class="btn btn-primary" onclick="saveCurrentReport()">
+                                <i class="fas fa-save"></i>
+                                Save Report
+                            </button>
+                            <button class="btn btn-danger" onclick="clearAllData()">
+                                <i class="fas fa-trash"></i>
+                                Clear All Data
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -662,6 +837,49 @@
                     </div>
                 </div>
 
+
+                <!-- Unified Report Message -->
+                <div class="section-header" onclick="toggleSection('unifiedPreviewSection', event)">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Unified Report Message</span>
+                    <i class="fas fa-chevron-down chevron"></i>
+                </div>
+                <div class="section-content" id="unifiedPreviewSection">
+                    <div class="section-inner">
+                        <div class="preview-container">
+                            <div class="preview-label">
+                                <i class="fas fa-comment-dots"></i>
+                                Combined Field Report
+                            </div>
+                            <textarea 
+                                class="preview-textarea" 
+                                id="unifiedPreviewText" 
+                                placeholder="Enter project information and add calculations to generate report..."
+                                oninput="handleUnifiedPreviewEdit()"
+                            ></textarea>
+                            <div class="format-warning hidden" id="unifiedFormatWarning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                Manual edits will be overwritten when calculations change
+                            </div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button class="btn btn-success" onclick="copyUnifiedMessage()">
+                                <i class="fas fa-copy"></i>
+                                Copy Report
+                            </button>
+                            <button class="btn btn-primary" onclick="saveCurrentReport()">
+                                <i class="fas fa-save"></i>
+                                Save Report
+                            </button>
+                            <button class="btn btn-danger" onclick="clearAllData()">
+                                <i class="fas fa-trash"></i>
+                                Clear All Data
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Valuations Section -->
                 <div class="reference-section">
                     <div class="reference-header collapsed" onclick="toggleReferenceTable('notesValuations', event)">
@@ -760,13 +978,13 @@
                         <button class="calc-btn" onclick="window.calcInput('7')" style="padding: 20px; font-size: 1.5rem; border: 2px solid var(--border); border-radius: 10px; background: var(--bg-card); color: var(--text-primary); cursor: pointer; font-weight: 600; transition: var(--transition-fast);">7</button>
                         <button class="calc-btn" onclick="window.calcInput('8')" style="padding: 20px; font-size: 1.5rem; border: 2px solid var(--border); border-radius: 10px; background: var(--bg-card); color: var(--text-primary); cursor: pointer; font-weight: 600; transition: var(--transition-fast);">8</button>
                         <button class="calc-btn" onclick="window.calcInput('9')" style="padding: 20px; font-size: 1.5rem; border: 2px solid var(--border); border-radius: 10px; background: var(--bg-card); color: var(--text-primary); cursor: pointer; font-weight: 600; transition: var(--transition-fast);">9</button>
-                        <button class="calc-btn calc-op" onclick="window.calcOperation('Ã·')" style="padding: 20px; font-size: 1.5rem; border: 2px solid var(--primary); border-radius: 10px; background: var(--primary); color: white; cursor: pointer; font-weight: 600; transition: var(--transition-fast);">Ã·</button>
+                        <button class="calc-btn calc-op" onclick="window.calcOperation('÷')" style="padding: 20px; font-size: 1.5rem; border: 2px solid var(--primary); border-radius: 10px; background: var(--primary); color: white; cursor: pointer; font-weight: 600; transition: var(--transition-fast);">÷</button>
                         
                         <!-- Row 2 -->
                         <button class="calc-btn" onclick="window.calcInput('4')" style="padding: 20px; font-size: 1.5rem; border: 2px solid var(--border); border-radius: 10px; background: var(--bg-card); color: var(--text-primary); cursor: pointer; font-weight: 600; transition: var(--transition-fast);">4</button>
                         <button class="calc-btn" onclick="window.calcInput('5')" style="padding: 20px; font-size: 1.5rem; border: 2px solid var(--border); border-radius: 10px; background: var(--bg-card); color: var(--text-primary); cursor: pointer; font-weight: 600; transition: var(--transition-fast);">5</button>
                         <button class="calc-btn" onclick="window.calcInput('6')" style="padding: 20px; font-size: 1.5rem; border: 2px solid var(--border); border-radius: 10px; background: var(--bg-card); color: var(--text-primary); cursor: pointer; font-weight: 600; transition: var(--transition-fast);">6</button>
-                        <button class="calc-btn calc-op" onclick="window.calcOperation('Ã—')" style="padding: 20px; font-size: 1.5rem; border: 2px solid var(--primary); border-radius: 10px; background: var(--primary); color: white; cursor: pointer; font-weight: 600; transition: var(--transition-fast);">Ã—</button>
+                        <button class="calc-btn calc-op" onclick="window.calcOperation('×')" style="padding: 20px; font-size: 1.5rem; border: 2px solid var(--primary); border-radius: 10px; background: var(--primary); color: white; cursor: pointer; font-weight: 600; transition: var(--transition-fast);">×</button>
                         
                         <!-- Row 3 -->
                         <button class="calc-btn" onclick="window.calcInput('1')" style="padding: 20px; font-size: 1.5rem; border: 2px solid var(--border); border-radius: 10px; background: var(--bg-card); color: var(--text-primary); cursor: pointer; font-weight: 600; transition: var(--transition-fast);">1</button>
@@ -848,6 +1066,10 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
+    
+    // Store globally for ES6 modules
+    window._firebaseAuth = auth;
+    window._firebaseDb = db;
     
     // Auth functions
     window.showAuthModal = function(mode) {

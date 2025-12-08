@@ -272,10 +272,10 @@ export function renderPipeLevelCheckReadings() {
         if (reading.slopeValue !== null && reading.slopeValue > 0) {
             if (reading.slopeMode === 'percent') {
                 const ratio = 100 / reading.slopeValue;
-                converterHtml = `<div class="converter-text">â‰ˆ 1 in ${formatRatio(ratio)} | Rise: ${(reading.slopeValue / 100).toFixed(4)} m/m</div>`;
+                converterHtml = `<div class="converter-text">≈ 1 in ${formatRatio(ratio)} | Rise: ${(reading.slopeValue / 100).toFixed(4)} m/m</div>`;
             } else {
                 const percent = 100 / reading.slopeValue;
-                converterHtml = `<div class="converter-text">â‰ˆ ${percent.toFixed(3)}% | Rise: ${(1 / reading.slopeValue).toFixed(4)} m/m</div>`;
+                converterHtml = `<div class="converter-text">≈ ${percent.toFixed(3)}% | Rise: ${(1 / reading.slopeValue).toFixed(4)} m/m</div>`;
             }
         }
         
@@ -297,7 +297,7 @@ export function renderPipeLevelCheckReadings() {
                 <div class="reading-card-header" onclick="window.toggleReadingCard('pipeLevelCheckReading-${reading.id}')">
                     <div class="reading-number">
                         <i class="fas fa-ruler-combined"></i>
-                        Check ${index + 1}${hasCalculation ? ` â€¢ ${reading.results.status}` : ''}
+                        Check ${index + 1}${hasCalculation ? ` • ${reading.results.status}` : ''}
                     </div>
                     <div class="reading-controls">
                         <button class="control-btn" onclick="event.stopPropagation(); window.movePipeLevelCheckReadingUp(${index})" ${index === 0 ? 'disabled' : ''} title="Move Up">

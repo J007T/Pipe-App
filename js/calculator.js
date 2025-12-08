@@ -59,7 +59,7 @@ export function calcInput(value) {
 }
 
 /**
- * Handle operation (+, -, Ã—, Ã·)
+ * Handle operation (+, -, ×, ÷)
  */
 export function calcOperation(op) {
     const current = parseFloat(calcState.display);
@@ -94,10 +94,10 @@ export function calcEquals() {
         case '-':
             result = prev - current;
             break;
-        case 'Ã—':
+        case '×':
             result = prev * current;
             break;
-        case 'Ã·':
+        case '÷':
             if (current === 0) {
                 showNotification('Cannot divide by zero', 'error');
                 calcClearAll();

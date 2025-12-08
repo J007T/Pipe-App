@@ -199,10 +199,10 @@ export function renderChainageILReadings() {
         if (reading.gradeValue !== null && reading.gradeValue > 0) {
             if (reading.gradeMode === 'percent') {
                 const calc = calculateGradeValues('percent', reading.gradeValue);
-                converterHtml = `<div class="converter-text">â‰ˆ 1 in ${formatRatio(calc.ratio)} | Rise: ${calc.risePerMeter.toFixed(4)} m/m</div>`;
+                converterHtml = `<div class="converter-text">≈ 1 in ${formatRatio(calc.ratio)} | Rise: ${calc.risePerMeter.toFixed(4)} m/m</div>`;
             } else {
                 const calc = calculateGradeValues('ratio', reading.gradeValue);
-                converterHtml = `<div class="converter-text">â‰ˆ ${calc.percent.toFixed(3)}% | Rise: ${calc.risePerMeter.toFixed(4)} m/m</div>`;
+                converterHtml = `<div class="converter-text">≈ ${calc.percent.toFixed(3)}% | Rise: ${calc.risePerMeter.toFixed(4)} m/m</div>`;
             }
         }
         
